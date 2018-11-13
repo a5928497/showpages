@@ -23,7 +23,8 @@ public class User {
     @Column(name = "PASSWORD")
     private String password;
 
-    @Column(name = "ROLE_ID")
+    @JoinColumn(name = "ROLE_ID")
+    @OneToOne
     private Role role;
 
 }
