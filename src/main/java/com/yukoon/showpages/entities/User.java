@@ -9,7 +9,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@Data
 @Accessors(chain = true)
 public class User {
 
