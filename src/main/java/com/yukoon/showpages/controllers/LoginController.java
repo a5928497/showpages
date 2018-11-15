@@ -37,8 +37,10 @@ public class LoginController {
         //添加角色
         Role admin = new Role().setRoleName("admin");
         Role business = new Role().setRoleName("business");
+        Role custom = new Role().setRoleName("custom");
         admin = roleService.addRole(admin);
         business = roleService.addRole(business);
+        custom = roleService.addRole(custom);
         //添加权限
         List<Permission> permissions = new ArrayList<>();
         permissions.add(new Permission().setPermName("admin_query").setRole(admin));

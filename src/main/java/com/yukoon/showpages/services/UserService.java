@@ -21,4 +21,14 @@ public class UserService {
 	public List<User> findAllAdmin() {
 		return  userRepo.findAllAdmin();
 	}
+
+	public boolean isAdmin(User user) {
+		return user.getRole().getRoleName().equals("admin");
+	}
+	public boolean isBussiness(User user) {
+		return user.getRole().getRoleName().equals("business");
+	}
+	public boolean isCustom(User user) {
+		return user.getRole().getRoleName().equals("custom");
+	}
 }
