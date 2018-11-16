@@ -34,7 +34,7 @@ public class UserController {
     @RequiresRoles("admin")
     @GetMapping("/user")
     public String toAddUser(){
-        return "/backend/bussiness_input";
+        return "/backend/business_input";
     }
 
     //后台添加商户
@@ -53,7 +53,7 @@ public class UserController {
     public String toEditUser(@PathVariable("id")Integer id, Map<String,Object> map){
         User user = userService.findById(id);
         map.put("user",user);
-        return "/backend/bussiness_input";
+        return "/backend/business_input";
     }
 
     //后台编辑商户
