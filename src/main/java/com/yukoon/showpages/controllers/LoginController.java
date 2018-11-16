@@ -72,24 +72,21 @@ public class LoginController {
                 currentUser.login(usernamePasswordToken);
             }catch (AuthenticationException ae){
                 System.out.println("登陆失败:"+ae.toString());
-                if (null != flag && flag.equals("bg")) {
-                    //若是从后台登录，返回backend登录
-                    return "redirect:/backend";
-                }
-//                else {
-//                    //若是从前台登录，返回前台登录
-//                    return "redirect:/login";
-//                }
+                return errorHandle(flag);
             }
         }
         user = userService.findByUsername(user.getUsername());
-        switch (user.getRole().getRoleName()) {
-            case "admin" :
-                return "redirect:/admin_dashboard";
-            case "bussiness" :
-                return "redirect:/bus_dashboard";
-            default:
-                return "redirect:"+url;
+        if (user.getStatus() == 1) {
+            switch (user.getRole().getRoleName()) {
+                case "admin" :
+                    return "redirect:/admin_dashboard";
+                case "bussiness" :
+                    return "redirect:/bus_dashboard";
+                default:
+                    return "redirect:"+url;
+            }
+        }else {
+            return errorHandle(flag);
         }
     }
 
@@ -120,5 +117,19 @@ public class LoginController {
                 .encodePassword("admin","admin"))
                 .setRole(admin).setTitle("管理员").setStatus(1);
         user_admin = userService.addUser(user_admin);
+    }
+
+    //出现错误返回函数
+    private String errorHandle(String flag) {
+        String result = null;
+        if (null != flag && flag.equals("bg")) {
+            //若是从后台登录，返回backend登录
+           result =  "redirect:/backend";
+        }
+//        else {
+//            //若是从前台登录，返回前台登录
+//            return "redirect:/login";
+//        }
+        return result;
     }
 }
