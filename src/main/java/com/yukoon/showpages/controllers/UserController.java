@@ -42,7 +42,8 @@ public class UserController {
     @PostMapping("/user")
     public String addUser(User user) {
         Role role = roleService.findByRolename(BUSSINESS);
-        user.setRole(role).setPassword(EncodeUtil.encodePassword(user.getPassword(),user.getUsername()));
+        user.setRole(role).setStatus(1)
+				.setPassword(EncodeUtil.encodePassword(user.getPassword(),user.getUsername()));
         user = userService.addUser(user);
         return "redirect:/admin_dashboard";
     }
@@ -67,4 +68,14 @@ public class UserController {
         userService.editUser(user);
         return "redirect:/admin_dashboard";
     }
+
+    //后台删除商户，并非真删除只是改变状态标记
+	@RequiresRoles("admin")
+	@GetMapping("/delusr/{id}")
+	public String delUser(@PathVariable("id")Integer id) {
+    	User user = userService.findById(id);
+    	user.setStatus(0);
+    	userService.editUser(user);
+    	return "redirect:/admin_dashboard";
+	}
 }

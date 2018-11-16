@@ -27,6 +27,10 @@ public class User {
     @Column(name = "TITLE")
     private String title;
 
+    //0禁用 1启用
+    @Column(name = "staus")
+    private Integer status;
+
     @JoinColumn(name = "ROLE_ID")
     @OneToOne
     private Role role;

@@ -118,7 +118,7 @@ public class LoginController {
         //添加管理员
         User user_admin = new User().setUsername("admin").setPassword(EncodeUtil
                 .encodePassword("admin","admin"))
-                .setRole(admin).setTitle("管理员");
+                .setRole(admin).setTitle("管理员").setStatus(1);
         user_admin = userService.addUser(user_admin);
     }
 }

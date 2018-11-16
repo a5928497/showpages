@@ -13,12 +13,13 @@ public interface UserRepo extends JpaRepository<User,Integer>{
 	@Query("select u from User u where u.role.roleName = 'admin'")
 	public List<User> findAllAdmin();
 
-	@Query("select u from User u where u.role.roleName = 'business'")
-	public List<User> findAllBussiness();
+	@Query("select u from User u where u.role.roleName = 'business' and u.status = 1")
+	public List<User> findAllAvailableBussiness();
 
 	public User findByUsername(String username);
 
 	//验证用户名是否存在
 	@Query("select u.username from User u where u.username = :username")
 	public String vaildateUsername(@Param("username") String username);
+
 }

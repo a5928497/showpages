@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	public List<User> findAllBusiness() {
-		return userRepo.findAllBussiness();
+		return userRepo.findAllAvailableBussiness();
 	}
 
 	public User findByUsername(String username) {

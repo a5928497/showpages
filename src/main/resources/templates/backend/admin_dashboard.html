@@ -59,6 +59,7 @@
 
                                     <td>
                                         <a th:href="@{/user/}+${user.id}"><button class="btn btn-sm btn-warning">编辑商户</button></a>
+                                        <a th:href="@{/delusr/}+${user.id}"><button class="btn btn-sm btn-danger delBTN">删除商户</button></a>
                                     </td>
 
                                 </tr>
@@ -84,7 +85,12 @@
 <!-- Mainly scripts -->
 <script type="text/javascript" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
-
+<script>
+    $(".delBTN").click(function () {
+        var isok = confirm("确定删除吗？");
+        return isok;
+    });
+</script>
 
 </body>
 
