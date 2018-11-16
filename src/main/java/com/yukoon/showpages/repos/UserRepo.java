@@ -22,4 +22,6 @@ public interface UserRepo extends JpaRepository<User,Integer>{
 	@Query("select u.username from User u where u.username = :username")
 	public String vaildateUsername(@Param("username") String username);
 
+	@Query("select u.password from User u where u.username = :username")
+	public String findPasswordByUsername(@Param("username") String username);
 }

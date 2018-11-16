@@ -5,10 +5,14 @@ import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.services.RoleService;
 import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.EncodeUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
@@ -77,5 +81,43 @@ public class UserController {
     	user.setStatus(0);
     	userService.editUser(user);
     	return "redirect:/admin_dashboard";
+	}
+
+	//后台前往修改密码
+	@RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+	@GetMapping("/updatepsw")
+	public String toUpdatePassword(Map<String,Object> map,String errMsg) {
+    	if (null != errMsg) {
+    		map.put("errMsg",errMsg);
+		}
+		//获得subject
+		Subject currentUser = SecurityUtils.getSubject();
+		if(currentUser.isAuthenticated() || currentUser.isRemembered()) {
+			String username = (String) currentUser.getPrincipal();
+			User user = userService.findByUsername(username);
+			map.put("id",user.getId());
+			return "/backend/update_password_input";
+		}else {
+			return "redirect:/logout";
+		}
+	}
+
+	//后台修改密码
+	@RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+	@PutMapping("/updatepsw")
+	public String updatePassword(String old_password, User user, RedirectAttributes redirectAttributes) {
+    	//验证原密码
+    	if (userService.vaildateOldPassword(old_password,user.getUsername())) {
+    		//若正确
+			user.setPassword(EncodeUtil.encodePassword(user.getPassword(),user.getUsername()));
+			user = userService.editUser(user);
+			if (user.getRole().getRoleName().equals("admin")) {
+				return "redirect:/admin_dashboard";
+			}
+			return "redirect:/bus_dashboard";
+		}else {
+    		redirectAttributes.addFlashAttribute("errMsg","原密码不正确！");
+    		return "redirect:/updatepsw";
+		}
 	}
 }

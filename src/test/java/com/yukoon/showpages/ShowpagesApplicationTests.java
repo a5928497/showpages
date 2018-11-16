@@ -1,5 +1,6 @@
 package com.yukoon.showpages;
 
+import com.yukoon.showpages.repos.UserRepo;
 import com.yukoon.showpages.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +14,11 @@ public class ShowpagesApplicationTests {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepo userRepo;
 	@Test
 	public void contextLoads() {
-		System.out.println(userService.findByUsername("admin") == null);
+		System.out.println(userRepo.findPasswordByUsername("admin"));
 	}
 
 }

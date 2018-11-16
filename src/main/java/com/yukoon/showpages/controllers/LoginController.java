@@ -10,6 +10,7 @@ import com.yukoon.showpages.utils.EncodeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class LoginController {
     }
 
     //前往后台商家界面
-    @RequiresRoles({"admin","business"})
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/bus_dashboard")
     public String toBusDashboard() {
         return "/backend/bus_dashboard";

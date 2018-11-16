@@ -24,6 +24,12 @@ public class UserService {
 	}
 
 	@Transactional
+	public boolean vaildateOldPassword(String old_password,String username) {
+		old_password = EncodeUtil.encodePassword(old_password,username);
+		return old_password.equals(userRepo.findPasswordByUsername(username));
+	}
+
+	@Transactional
 	public User editUser(User user) {
 		user = userRepo.saveAndFlush(user);
 		return user;
