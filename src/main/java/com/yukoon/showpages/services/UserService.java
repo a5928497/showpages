@@ -22,12 +22,28 @@ public class UserService {
 		return  userRepo.findAllAdmin();
 	}
 
+	public User findByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+
+	@Transactional
+	public User login(User user) {
+		User user_temp = userRepo.findByUsername(user.getUsername());
+		//验证密码
+		if (user_temp != null && user_temp.getPassword().equals(user.getPassword())) {
+			return user_temp;
+		}
+		return null;
+	}
+
 	public boolean isAdmin(User user) {
 		return user.getRole().getRoleName().equals("admin");
 	}
+
 	public boolean isBussiness(User user) {
 		return user.getRole().getRoleName().equals("business");
 	}
+
 	public boolean isCustom(User user) {
 		return user.getRole().getRoleName().equals("custom");
 	}

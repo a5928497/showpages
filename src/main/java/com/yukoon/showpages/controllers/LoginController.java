@@ -7,9 +7,14 @@ import com.yukoon.showpages.services.PermissionService;
 import com.yukoon.showpages.services.RoleService;
 import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.EncodeUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ public class LoginController {
     @Autowired
     private PermissionService permissionService;
 
+    //前往后台登录界面
     @GetMapping("/backend")
     public String toBackend() {
         //若没找到管理员，则初始化系统
@@ -30,6 +36,43 @@ public class LoginController {
             initAdmin();
         }
         return "/backend/backend";
+    }
+
+    //处理登录请求
+    @PostMapping("/login")
+    public String login(User user,String flag,String url) {
+        //获得subject
+        Subject currentUser = SecurityUtils.getSubject();
+        if(!currentUser.isAuthenticated()){
+            //把用户名密码封装为Token对象
+            String username = user.getUsername();
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, EncodeUtil.encodePassword(user.getPassword(),username));
+            //设置token的rememberme
+            usernamePasswordToken.setRememberMe(true);
+            try {
+                //执行登录
+                currentUser.login(usernamePasswordToken);
+            }catch (AuthenticationException ae){
+                System.out.println("登陆失败:"+ae.toString());
+                if (null != flag && flag.equals("bg")) {
+                    //若是从后台登录，返回backend登录
+                    return "redirect:/backend";
+                }
+//                else {
+//                    //若是从前台登录，返回前台登录
+//                    return "redirect:/login";
+//                }
+            }
+        }
+        user = userService.findByUsername(user.getUsername());
+        switch (user.getRole().getRoleName()) {
+            case "admin" :
+                return "/backend/admin_dashboard";
+            case "bussiness" :
+                return "/backend/bus_dashboard";
+            default:
+                return "redirect:"+url;
+        }
     }
 
     //初始化角色，权限并创建一个管理员
