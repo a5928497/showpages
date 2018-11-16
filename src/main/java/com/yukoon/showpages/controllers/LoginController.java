@@ -10,6 +10,7 @@ import com.yukoon.showpages.utils.EncodeUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,20 @@ public class LoginController {
             initAdmin();
         }
         return "/backend/backend";
+    }
+
+    //前往后台管理员界面
+    @RequiresRoles("admin")
+    @GetMapping("/admin_dashboard")
+    public String toAdminDashboard() {
+        return "/backend/admin_dashboard";
+    }
+
+    //前往后台商家界面
+    @RequiresRoles({"admin","business"})
+    @GetMapping("/bus_dashboard")
+    public String toBusDashboard() {
+        return "/backend/bus_dashboard";
     }
 
     //处理登录请求
@@ -67,9 +82,9 @@ public class LoginController {
         user = userService.findByUsername(user.getUsername());
         switch (user.getRole().getRoleName()) {
             case "admin" :
-                return "/backend/admin_dashboard";
+                return "redirect:/admin_dashboard";
             case "bussiness" :
-                return "/backend/bus_dashboard";
+                return "redirect:/bus_dashboard";
             default:
                 return "redirect:"+url;
         }
