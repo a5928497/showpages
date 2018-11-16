@@ -2,6 +2,7 @@ package com.yukoon.showpages.entities;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,6 +23,9 @@ public class User {
 
     @Column(name = "PASSWORD")
     private String password;
+
+    @Column(name = "TITLE")
+    private String title;
 
     @JoinColumn(name = "ROLE_ID")
     @OneToOne

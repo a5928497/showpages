@@ -15,4 +15,8 @@ public class RoleService {
 	public Role addRole(Role role) {
 		return roleRepo.saveAndFlush(role);
 	}
+
+	public Role findByRolename(String rolename) {
+		return roleRepo.findByRoleName(rolename);
+	}
 }

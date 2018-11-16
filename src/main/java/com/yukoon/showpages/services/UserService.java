@@ -2,6 +2,7 @@ package com.yukoon.showpages.services;
 
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.repos.UserRepo;
+import com.yukoon.showpages.utils.EncodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +16,33 @@ public class UserService {
 
 	@Transactional
 	public User addUser(User user) {
-		return userRepo.saveAndFlush(user);
+		//判断用户是否已经注册
+		if (userRepo.vaildateUsername(user.getUsername()) == null) {
+			user = userRepo.saveAndFlush(user);
+		}
+		return user;
+	}
+
+	@Transactional
+	public User editUser(User user) {
+		user = userRepo.saveAndFlush(user);
+		return user;
 	}
 
 	public List<User> findAllAdmin() {
 		return  userRepo.findAllAdmin();
 	}
 
+	public List<User> findAllBusiness() {
+		return userRepo.findAllBussiness();
+	}
+
 	public User findByUsername(String username) {
 		return userRepo.findByUsername(username);
+	}
+
+	public User findById(Integer id) {
+		return userRepo.findOne(id);
 	}
 
 	@Transactional

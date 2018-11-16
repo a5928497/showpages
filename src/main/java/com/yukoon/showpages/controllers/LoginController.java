@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -42,7 +43,9 @@ public class LoginController {
     //前往后台管理员界面
     @RequiresRoles("admin")
     @GetMapping("/admin_dashboard")
-    public String toAdminDashboard() {
+    public String toAdminDashboard(Map<String,Object> map) {
+        List<User> users = userService.findAllBusiness();
+        map.put("users",users);
         return "/backend/admin_dashboard";
     }
 
@@ -115,7 +118,7 @@ public class LoginController {
         //添加管理员
         User user_admin = new User().setUsername("admin").setPassword(EncodeUtil
                 .encodePassword("admin","admin"))
-                .setRole(admin);
+                .setRole(admin).setTitle("管理员");
         user_admin = userService.addUser(user_admin);
     }
 }
