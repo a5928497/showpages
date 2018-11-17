@@ -16,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
@@ -52,8 +53,10 @@ public class LoginController {
 
     //前往后台商家界面
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
-    @GetMapping("/bus_dashboard")
-    public String toBusDashboard() {
+    @GetMapping("/bus_dashboard/{id}")
+    public String toBusDashboard(@PathVariable("id")Integer id,Map<String,Object> map) {
+        User user = userService.findById(id);
+        map.put("user",user);
         return "/backend/bus_dashboard";
     }
 
@@ -81,8 +84,8 @@ public class LoginController {
             switch (user.getRole().getRoleName()) {
                 case "admin" :
                     return "redirect:/admin_dashboard";
-                case "bussiness" :
-                    return "redirect:/bus_dashboard";
+                case "business" :
+                    return "redirect:/bus_dashboard/" + user.getId();
                 default:
                     return "redirect:"+url;
             }

@@ -114,14 +114,14 @@ public class UserController {
 			if (user.getRole().getRoleName().equals("admin")) {
 				return "redirect:/admin_dashboard";
 			}
-			return "redirect:/bus_dashboard";
+			return "redirect:/bus_dashboard/" + user.getId();
 		}else {
     		redirectAttributes.addFlashAttribute("errMsg","原密码不正确！");
     		return "redirect:/updatepsw";
 		}
 	}
 
-	//前台检查账号是否唯一
+	//后台检查账号是否唯一
     @ResponseBody
     @RequiresRoles(value = {"admin"})
     @GetMapping("/acccheck")
