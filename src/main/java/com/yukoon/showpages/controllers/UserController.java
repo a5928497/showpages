@@ -120,4 +120,12 @@ public class UserController {
     		return "redirect:/updatepsw";
 		}
 	}
+
+	//前台检查账号是否唯一
+    @ResponseBody
+    @RequiresRoles(value = {"admin"})
+    @GetMapping("/acccheck")
+    public boolean accountCheck(String username) {
+        return null == userService.findByUsername(username);
+    }
 }
