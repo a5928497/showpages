@@ -47,8 +47,11 @@
                         </div>
                         <div class="ibox-content">
                             <form action="/field" method="post" class="form-horizontal" modelAttribute="customField">
+                                <!--若是修改，加入id和put隐藏域-->
+                                <input type="hidden" name="id" th:value="${customField.id}" th:if="${customField !=null}">
+                                <input type="hidden" th:name="_method" th:value="put" th:if="${customField !=null}">
                                 <!--所属商户ID-->
-                                <input type="hidden" name="business.id" th:value="${user.id}">
+                                <input type="hidden" name="business.id" th:value="${customField==null}?${user.id}:${customField.business.id}">
                                 <input type="hidden" name="condition" id="condition">
                                 <div class="form-group"><label class="col-sm-2 control-label">字段类型</label>
                                     <div class="col-sm-10"><select class="form-control m-b field_select" name="type">
@@ -62,16 +65,24 @@
                                     </div>
                                 </div>
                                 <div class="form-group"><label class="col-sm-2 control-label">字段名</label>
-                                    <div class="col-sm-10"><input name="title" type="text" class="form-control title"></div>
+                                    <div class="col-sm-10">
+                                        <input name="title" type="text" class="form-control title"
+                                               th:value="${customField!=null}?${customField.title}">
+                                    </div>
                                 </div>
                                 <div class="form-group order-group"><label class="col-sm-2 control-label">排序</label>
                                     <div class="col-sm-10">
-                                        <input name="order" type="text" class="form-control order" placeholder="该项为空则自动排在末尾">
+                                        <input name="order" type="text" class="form-control order"
+                                               th:value="${customField!=null}?${customField.order}"
+                                               placeholder="该项为空则自动排在末尾">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6 col-sm-offset-2 btns">
-                                        <button th:attr="back_uri = @{/bus_dashboard/}+${user.id}"  type="button" class="btn btn-white backBTN" >取消</button>
+                                        <button th:attr="back_uri = @{/bus_dashboard/}+${customField.id}"  type="button"
+                                                class="btn btn-white backBTN"  th:if="${customField!=null}">取消</button>
+                                        <button th:attr="back_uri = @{/bus_dashboard/}+${user.id}"  type="button"
+                                                class="btn btn-white backBTN" th:if="${customField == null}">取消</button>
                                         <button class="btn btn-primary submitBTN" type="submit">保存</button>
                                     </div>
                                 </div>

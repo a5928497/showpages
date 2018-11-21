@@ -78,16 +78,12 @@ public class FieldController extends BasicController{
     }
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
-    @GetMapping("/editfield/{id}")
-    public String toEditField(@PathVariable("id")Integer id, Map<String,Object> map) {
+    @GetMapping("/editfield/{field_id}")
+    public String toEditField(@PathVariable("field_id")Integer field_id, Map<String,Object> map) {
         User me = whoAmI();
-        CustomField customField = customFieldService.findById(id);
-        if (null != me && me.getRole().getRoleName().equals("business")) {
-            map.put("user",me);
-            return "/backend/field_input";
-        }else if ("admin".equals(me.getRole().getRoleName())) {
-
-            map.put("user",customField.getBusiness());
+        CustomField customField = customFieldService.findById(field_id);
+        if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
+            map.put("customField",customField);
             return "/backend/field_input";
         }
         return "redirect:/logout";

@@ -60,7 +60,7 @@
                                     <td th:text="${field.order}">username</td>
 
                                     <td>
-                                        <!--<a th:href="@{/user/}+${user.id}"><button class="btn btn-sm btn-warning">编辑商户</button></a>-->
+                                        <a th:href="@{/editfield/}+${field.id}"><button class="btn btn-sm btn-warning">编辑字段</button></a>
                                         <!--<a th:href="@{/bus_dashboard/}+${user.id}"><button class="btn btn-sm btn-info">管理商户</button></a>-->
                                         <a th:href="@{/delfield/}+${field.id}"><button class="btn btn-sm btn-danger delBTN">删除字段</button></a>
                                     </td>
