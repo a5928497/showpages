@@ -41,9 +41,10 @@ $(function () {
     //类型为时间事件函数
     function showTimes() {
         $orderGrp.after(addInput(count,count,"除去时段","except-time","timeCon",false,"格式示例：15:00-16:30"));
-        $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字"));
+        $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字，默认60（单位：分钟）"));
         $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加去除时段</button> ");
         addAddBTNOnListener(".btns","click",".addBTN","除去时段","except-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
+        addResultOnListener("form","blur",".except-time,.interval");
     }
     
     //类型为多选事件函数
@@ -64,7 +65,13 @@ $(function () {
     //绑定处理输入结果事件委派
     function addResultOnListener(parentSelector,event,selector) {
         $(parentSelector).on(event,selector,function () {
-            var condition = "";
+            var condition;
+            var interval = $(".interval").val();
+            if ("" == interval) {
+                condition = "60,";
+            }else {
+                condition = "";
+            }
             $(selector).each(function () {
                 var val = $(this).val();
                 if (val != "") {
