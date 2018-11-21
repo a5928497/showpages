@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fields</title>
+    <link th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/webjars/footable/2.0.3/css/footable.core.min.css}" rel="stylesheet">
+    <link th:href="@{/css/commons/logout.css}" rel="stylesheet">
+    <link th:href="@{/css/commons/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/commons/style.min.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="wrapper">
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <a th:replace="commons/logout::logout_btn"></a>
+                <h2>管理后台</h2>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <a th:href="@{/addfield/} + ${id}"><button class="btn btn-primary btn-warning">添加字段</button></a>
+            <shiro:hasRole name="admin">
+                <a th:href="@{/admin_dashboard}"><button class="btn btn-primary btn-primary">管理员控制台</button></a>
+            </shiro:hasRole>
+            <div class="border"></div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>字段列表</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <table class="footable table table-stripped toggle-arrow-tiny">
+                                <thead>
+                                <tr>
+                                    <th data-hide="all">ID</th>
+                                    <th data-hide="all">字段名</th>
+                                    <th data-hide="all">排序</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="field:${fields}">
+                                    <td th:text="${field.id}">ID</td>
+                                    <td th:text="${field.title}">title</td>
+                                    <td th:text="${field.order}">username</td>
+
+                                    <td>
+                                        <!--<a th:href="@{/user/}+${user.id}"><button class="btn btn-sm btn-warning">编辑商户</button></a>-->
+                                        <!--<a th:href="@{/bus_dashboard/}+${user.id}"><button class="btn btn-sm btn-info">管理商户</button></a>-->
+                                        <a th:href="@{/delfield/}+${field.id}"><button class="btn btn-sm btn-danger delBTN">删除字段</button></a>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination pull-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script type="text/javascript" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
+<script>
+    $(".delBTN").click(function () {
+        var isok = confirm("确定删除吗？");
+        return isok;
+    });
+</script>
+
+</body>
+
+</html>

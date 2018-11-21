@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
+@Entity
 public class CustomField {
 
 	@GeneratedValue(strategy = GenerationType.AUTO)
