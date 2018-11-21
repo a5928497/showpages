@@ -45,20 +45,32 @@
                             <h5>商户编辑</h5>
                         </div>
                         <div class="ibox-content">
-                            <div class="form-group"><label class="col-sm-2 control-label">字段类型</label>
-                                <div class="col-sm-10"><select class="form-control m-b field_select">
-                                    <option value="1">短文本</option>
-                                    <option value="2">长文本</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                </select>
-                                </div>
-                            </div>
                             <form action="/user" method="post" class="form-horizontal" modelAttribute="user">
-
+                                <!--所属商户ID-->
+                                <input type="hidden" name="business.id" th:value="${user.id}">
+                                <input type="hidden" name="condition" id="condition">
+                                <div class="form-group"><label class="col-sm-2 control-label">字段类型</label>
+                                    <div class="col-sm-10"><select class="form-control m-b field_select" name="type">
+                                        <option value="1">短文本</option>
+                                        <option value="2">长文本</option>
+                                        <option value="3">单选项</option>
+                                        <option value="4">多选项</option>
+                                        <option value="5">日期</option>
+                                        <option value="6">时间</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">字段名</label>
+                                    <div class="col-sm-10"><input name="title" type="text" class="form-control title"></div>
+                                </div>
+                                <div class="form-group order-group"><label class="col-sm-2 control-label">排序</label>
+                                    <div class="col-sm-10">
+                                        <input name="order" type="text" class="form-control order" placeholder="该项为空则自动排在末尾">
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <button th:attr="back_uri = @{/bus_dashboard}+${user.id}"  type="button" class="btn btn-white backBTN" >取消</button>
+                                        <button th:attr="back_uri = @{/bus_dashboard/}+${user.id}"  type="button" class="btn btn-white backBTN" >取消</button>
                                         <button class="btn btn-primary submitBTN" type="submit">保存</button>
                                     </div>
                                 </div>
@@ -79,7 +91,7 @@
     <!-- CodeMirror -->
     <script th:src="@{/webjars/codemirror/5.33.0/src/codemirror.js}"></script>
     <script th:src="@{/webjars/codemirror/5.33.0/mode/xml/xml.js}"></script>
-    <script th:src="@{/js/backend/business_input.js}"></script>
+    <script th:src="@{/js/backend/filed_input.js}"></script>
 </body>
 
 </html>
