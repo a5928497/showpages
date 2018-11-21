@@ -92,7 +92,9 @@ $(function () {
     function cleanContainers() {
         $(".radioCon").remove();
         $(".checkboxCon").remove();
-        $(".addBTN").remove();
+        $(".addBTN").remove()
+        $(".btns").off();
+        $("form").off();
         count = 1;
     }
 });
