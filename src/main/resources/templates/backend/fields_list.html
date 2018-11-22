@@ -31,7 +31,8 @@
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
-            <a th:href="@{/addfield/} + ${id}"><button class="btn btn-primary btn-warning">添加字段</button></a>
+            <a th:href="@{/addfield/} + ${id}"><button class="btn btn-primary btn-success">添加字段</button></a>
+            <a th:href="@{/bus_dashboard/} + ${id}"><button class="btn btn-primary btn-info">返回控制台</button></a>
             <shiro:hasRole name="admin">
                 <a th:href="@{/admin_dashboard}"><button class="btn btn-primary btn-primary">管理员控制台</button></a>
             </shiro:hasRole>
