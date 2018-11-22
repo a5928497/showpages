@@ -20,6 +20,11 @@ $(function () {
         //根据类型不同生成不同交互表单
         optionSwitch(type);
     });
+    //修改时处理回显
+    $customFieldInfo = $("#customFieldInfo");
+    if ($customFieldInfo.length != 0) {
+        echoSwitch($customFieldInfo.val(),$customFieldInfo.attr("condition"));
+    }
 
     function optionSwitch(type) {
         switch (type) {
@@ -38,6 +43,26 @@ $(function () {
         }
     }
     
+    //修改时回显函数
+    function echoSwitch(type,customFieldInfo) {
+        var conditions = customFieldInfo.split(",");
+        $("select option[value='"+ type + "']").attr("selected","selected");
+        switch (type) {
+            case "3" :
+                echoRadio(conditions);
+                break;
+            case "4" :
+                echoCheckbox(conditions);
+                break;
+            case "6" :
+                echoTimes(conditions);
+                break;
+            default :
+                break;
+        }
+    }
+    
+    
     //类型为时间事件函数
     function showTimes() {
         $orderGrp.after(addInput(count,count,"除去时段","except-time","timeCon",false,"格式示例：15:00-16:30"));
@@ -46,18 +71,48 @@ $(function () {
         addAddBTNOnListener(".btns","click",".addBTN","除去时段","except-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
         addResultOnListener("form","blur",".except-time,.interval");
     }
+
+    //回显类型为时间事件函数
+    function echoTimes(value) {
+        $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字，默认60（单位：分钟）",value[0]));
+        for (var i=1;i<value.length;i++) {
+            $orderGrp.after(addInput(count,count,"除去时段","except-time","timeCon",false,"格式示例：15:00-16:30",value[i]));
+        }
+        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加去除时段</button> ");
+        addAddBTNOnListener(".btns","click",".addBTN","除去时段","except-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
+        addResultOnListener("form","blur",".except-time,.interval");
+    }
     
     //类型为多选事件函数
     function showCheckbox() {
-        $orderGrp.after(addInput(count,4,"选项","checkbox","checkboxCon",true));
+        $orderGrp.after(addInput(count,4,"选项","checkbox","checkboxCon",true,null,null));
         addResultOnListener("form","blur",".checkbox");
         $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加选项</button> ");
         addAddBTNOnListener(".btns","click",".addBTN","选项","checkbox","checkboxCon",".checkboxCon:last",true);
     }
-    
+
+    //回显类型为多选事件函数
+    function echoCheckbox(value) {
+        for (var i=0;i<value.length;i++) {
+            $orderGrp.after(addInput(count,count,"选项","checkbox","checkboxCon",true,null,value[i]));
+        }
+        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加选项</button> ");
+        addResultOnListener("form","blur",".checkbox");
+        addAddBTNOnListener(".btns","click",".addBTN","选项","checkbox","checkboxCon",".checkboxCon:last",true);
+    }
+
     //类型为单选事件函数
     function showRadio() {
-        $orderGrp.after(addInput(count,4,"选项","radio","radioCon",true));
+        $orderGrp.after(addInput(count,4,"选项","radio","radioCon",true,null,null));
+        //使用事件委派获取各单选项内容
+        addResultOnListener("form","blur",".radio");
+    }
+    
+    //回显类型为单选事件函数
+    function echoRadio(value) {
+        for (var i=0;i<value.length;i++) {
+            $orderGrp.after(addInput(count,count,"选项","radio","radioCon",true,null,value[i]));
+        }
         //使用事件委派获取各单选项内容
         addResultOnListener("form","blur",".radio");
     }
@@ -98,18 +153,21 @@ $(function () {
      * @param clazz 输入框class标记属性
      * @param clazzContainer 包裹区域标记属性
      */
-    function addInput(beginNum,overNum,prefix,clazz,clazzContainer,needSerial,placeholder) {
+    function addInput(beginNum,overNum,prefix,clazz,clazzContainer,needSerial,placeholder,value) {
         var result = "";
         //placeholder置空
         if (null == placeholder) {
             placeholder = "";
+        }
+        if (null == value) {
+            value = "";
         }
         //判断是否需要序号
         if (true == needSerial) {
             for (var i =beginNum;i<=overNum;i++ ) {
                 result = result + "<div class=\"form-group "+ clazzContainer +"\"><label class=\"col-sm-2 control-label\">"+ prefix + i +"</label>\n" +
                     "                                    <div class=\"col-sm-10\"><input type=\"text\" placeholder=\""+ placeholder
-                    +"\" class=\"form-control "+ clazz +"\"></div>\n" +
+                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value + "\"></div>\n" +
                     "                                </div>\n";
                 count++;
             }
@@ -117,7 +175,7 @@ $(function () {
             for (var i =beginNum;i<=overNum;i++ ) {
                 result = result + "<div class=\"form-group "+ clazzContainer +"\"><label class=\"col-sm-2 control-label\">"+ prefix +"</label>\n" +
                     "                                    <div class=\"col-sm-10\"><input type=\"text\" placeholder=\""+ placeholder
-                    +"\" class=\"form-control "+ clazz +"\"></div>\n" +
+                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value +"\"></div>\n" +
                     "                                </div>\n";
                 count++;
             }
@@ -133,6 +191,7 @@ $(function () {
         $(".addBTN").remove()
         $(".btns").off();
         $("form").off();
+        $("select option[selected='selected']").removeAttr("selected");
         count = 1;
     }
     
