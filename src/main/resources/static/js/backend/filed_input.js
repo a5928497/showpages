@@ -142,7 +142,6 @@ $(function () {
     function addAddBTNOnListener(parentSelector,event,selector,prefix,clazz,clazzContainer,callSelector,needSerial,placeholder) {
         $(parentSelector).on(event,selector,function () {
                 $(callSelector).after(addInput(count,count,prefix,clazz,clazzContainer,needSerial,placeholder));
-                console.log(111)
         });
     }
 
