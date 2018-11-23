@@ -21,10 +21,8 @@
 </head>
 
 <body>
-    <!--<input type="hidden"  id="img_path" th:value="${img_path}">-->
+    <input type="hidden"  id="img_path" th:value="${img_path}">
     <div id="wrapper">
-
-
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
         </div>
@@ -56,31 +54,14 @@
                     <form action="/themeimgupload" enctype="multipart/form-data" method="post">
                         <div class="col-sm-10">
                             <select class="form-control m-b" name="themeImg">
-                                <optgroup label="登录页">
-                                    <option value="login_pg/login_background.jpg">登录页背景</option>
-                                    <option value="login_pg/login_btn.png">登录按钮</option>
-                                    <option value="login_pg/vaildate_btn.png">验证码按钮</option>
+                                <optgroup label="欢迎页">
+                                    <option value="login_pg/login_background.jpg">欢迎页背景</option>
+                                    <option value="login_pg/login_btn.png">参加按钮</option>
                                 </optgroup>
-                                <optgroup label="活动介绍页">
-                                    <option value="act_info_pg/actinfo_background.jpg">介绍页背景</option>
-                                    <option value="act_info_pg/join_btn.png">参与按钮</option>
-                                </optgroup>
-                                <optgroup label="活动详情页">
-                                    <option value="details_pg/details_background.jpg">详情页背景</option>
-                                    <option value="details_pg/help_btn.png">帮砍按钮</option>
-                                    <option value="details_pg/details_join_btn.png">参加按钮</option>
-                                    <option value="details_pg/records_btn.png">记录按钮</option>
-                                    <option value="details_pg/share_btn.png">分享按钮</option>
-                                </optgroup>
-                                <optgroup label="礼品选择页">
-                                    <option value="option_pg/option_background.jpg">选择页背景</option>
-                                    <option value="option_pg/back_btn.png">返回按钮</option>
-                                    <option value="option_pg/select_btn.png">确认按钮</option>
-                                    <option value="option_pg/arrows_left.png">向左按钮</option>
-                                    <option value="option_pg/arrows_right.png">向右按钮</option>
-                                </optgroup>
-                                <optgroup label="用户信息页">
-                                    <option value="user_info_pg/userinfo_background.jpg">信息页背景</option>
+                                <optgroup label="详情页">
+                                    <option value="act_info_pg/actinfo_background.jpg">详情页背景</option>
+                                    <option value="act_info_pg/actinfo_background.jpg">详情页LOGO</option>
+                                    <option value="act_info_pg/join_btn.png">提交按钮</option>
                                 </optgroup>
                             </select>
                         </div>
