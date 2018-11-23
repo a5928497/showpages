@@ -51,16 +51,16 @@ $(function () {
         if (true == needSerial) {
             for (var i =beginNum;i<=overNum;i++ ) {
                 result = result + "<div class=\"form-group "+ clazzContainer +"\"><label class=\"col-sm-2 control-label\">"+ prefix + i +"</label>\n" +
-                    "                                    <div class=\"col-sm-10\"><input type=\"text\" placeholder=\""+ placeholder
-                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value + "\"></div>\n" +
+                    "                                    <div class=\"col-sm-10\"><textarea type=\"text\" placeholder=\""+ placeholder
+                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value + "\">"+ value +"</textarea></div>\n" +
                     "                                </div>\n";
                 count++;
             }
         }else {
             for (var i =beginNum;i<=overNum;i++ ) {
                 result = result + "<div class=\"form-group "+ clazzContainer +"\"><label class=\"col-sm-2 control-label\">"+ prefix +"</label>\n" +
-                    "                                    <div class=\"col-sm-10\"><input type=\"text\" placeholder=\""+ placeholder
-                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value +"\"></div>\n" +
+                    "                                    <div class=\"col-sm-10\"><textarea type=\"text\" placeholder=\""+ placeholder
+                    +"\" class=\"form-control "+ clazz +"\" value=\""+ value +"\">"+ value +"</textarea></div>\n" +
                     "                                </div>\n";
                 count++;
             }
