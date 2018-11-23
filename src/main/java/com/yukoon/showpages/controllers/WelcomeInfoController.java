@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -30,6 +33,19 @@ public class WelcomeInfoController extends BasicController {
             map.put("id",id);
             return "/backend/welcomeInfo_input";
         }
-        return "redirect:/logout";
+        //非法访问则返回用户所在控制台界面
+        return "redirect:/bus_dashboard/" + me.getId();
+    }
+
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @PostMapping("/welcomeInfo")
+    public String addWelcomeInfo(WelcomeInfo welcomeInfo) {
+        User me = whoAmI();
+        if (null != me && welcomeInfo.getBusiness().getId() == me.getId() || "admin".equals(me.getRole().getRoleName())) {
+            welcomeInfo = welcomeInfoService.addWelcomeInfo(welcomeInfo);
+            return "redirect:/welcomeInfo/" + welcomeInfo.getBusiness().getId();
+        }
+        //非法访问则返回用户所在控制台界面
+        return "redirect:/bus_dashboard/" + me.getId();
     }
 }

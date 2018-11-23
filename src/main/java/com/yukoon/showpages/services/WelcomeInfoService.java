@@ -4,6 +4,7 @@ import com.yukoon.showpages.entities.WelcomeInfo;
 import com.yukoon.showpages.repos.WelcomeInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class WelcomeInfoService {
@@ -12,5 +13,10 @@ public class WelcomeInfoService {
 
 	public WelcomeInfo findByBusinessId(Integer businessId) {
 		return welcomeInfoRepo.findByBusinessId(businessId);
+	}
+
+	@Transactional
+	public WelcomeInfo addWelcomeInfo(WelcomeInfo welcomeInfo) {
+		return welcomeInfoRepo.saveAndFlush(welcomeInfo);
 	}
 }
