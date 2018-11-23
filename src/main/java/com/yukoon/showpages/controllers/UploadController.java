@@ -46,8 +46,13 @@ public class UploadController extends BasicController {
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/themeimgupload")
     public String uploadTheme(@RequestParam("pic")MultipartFile pic, HttpServletRequest request
-            , String themeImg, RedirectAttributes attributes){
+            , String themeImg, RedirectAttributes attributes,Integer businessId){
         User me =whoAmI();
+        if (null != me && (me.getId() == businessId || "admin".equals(me.getRole().getRoleName()))) {
+        	me = userService.findById(businessId);
+		}else {
+        	return "redirect:/bus_dashboard/" + me.getId();
+		}
         String filePath = pathConfig.getWelcomePageImgPath() + StringUtils.substringBeforeLast(themeImg,"/")+"/";
         String fileName = pic.getOriginalFilename();
         String uploadMsg = "图片上传成功!";
