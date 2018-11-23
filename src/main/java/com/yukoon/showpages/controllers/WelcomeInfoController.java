@@ -33,7 +33,7 @@ public class WelcomeInfoController extends BasicController {
     @GetMapping("/welcomeInfo/{id}")
     public String toEditWelcomeInfo(@PathVariable("id")Integer id, Map<String,Object> map) {
         User me = whoAmI();
-        if (null != me && id == me.getId() || "admin".equals(me.getRole().getRoleName())) {
+        if (null != me && (id == me.getId() || "admin".equals(me.getRole().getRoleName()))) {
             WelcomeInfo welcomeInfo = welcomeInfoService.findByBusinessId(id);
             if (null != welcomeInfo) {
                 map.put("welcomeInfo",welcomeInfo);
@@ -49,7 +49,7 @@ public class WelcomeInfoController extends BasicController {
     @PostMapping("/welcomeInfo")
     public String addWelcomeInfo(WelcomeInfo welcomeInfo) {
         User me = whoAmI();
-        if (null != me && welcomeInfo.getBusiness().getId() == me.getId() || "admin".equals(me.getRole().getRoleName())) {
+        if (null != me && (welcomeInfo.getBusiness().getId() == me.getId() || "admin".equals(me.getRole().getRoleName()))) {
             welcomeInfo = welcomeInfoService.saveWelcomeInfo(welcomeInfo);
             return "redirect:/welcomeInfo/" + welcomeInfo.getBusiness().getId();
         }
@@ -61,7 +61,7 @@ public class WelcomeInfoController extends BasicController {
     @PutMapping("/welcomeInfo")
     public String editWelcomeInfo(WelcomeInfo welcomeInfo) {
         User me = whoAmI();
-        if (null != me && welcomeInfo.getBusiness().getId() == me.getId() || "admin".equals(me.getRole().getRoleName())) {
+        if (null != me && (welcomeInfo.getBusiness().getId() == me.getId() || "admin".equals(me.getRole().getRoleName()))) {
             welcomeInfo = welcomeInfoService.saveWelcomeInfo(welcomeInfo);
             return "redirect:/welcomeInfo/" + welcomeInfo.getBusiness().getId();
         }
