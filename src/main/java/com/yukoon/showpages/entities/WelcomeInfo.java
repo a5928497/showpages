@@ -18,7 +18,7 @@ public class WelcomeInfo {
 	@Id
 	private Integer id;
 
-	@Column(name = "PARAGRAPH")
+	@Column(name = "PARAGRAPH",columnDefinition = "TEXT")
 	private String paragraph;
 
 	@OneToOne

@@ -31,7 +31,7 @@ public class CustomField {
 	@Column(name = "FIELD_TITLE")
 	private String title;
 
-	@Column(name = "FIELD_CONDITION")
+	@Column(name = "FIELD_CONDITION",columnDefinition = "TEXT")
 	private String condition;
 
 	@JoinColumn(name = "BUSINESS_ID")

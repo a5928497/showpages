@@ -16,7 +16,11 @@ public class WelcomeInfoService {
 	}
 
 	@Transactional
-	public WelcomeInfo addWelcomeInfo(WelcomeInfo welcomeInfo) {
+	public WelcomeInfo saveWelcomeInfo(WelcomeInfo welcomeInfo) {
 		return welcomeInfoRepo.saveAndFlush(welcomeInfo);
+	}
+
+	public WelcomeInfo findById(Integer id) {
+		return welcomeInfoRepo.findOne(id);
 	}
 }

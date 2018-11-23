@@ -8,11 +8,34 @@ $(function () {
         var uri = $backBTN.attr("back_uri");
         window.location.replace(uri);
         return false;
-    })
+    });
+
+    //处理回显
+    $paragraph = $("input[name='paragraph']");
+    if ($paragraph.val() != "") {
+        count = 1;
+        var paragraphs = $paragraph.val().split(",");
+        for (var i = 0;i<paragraphs.length;i++) {
+            $(".btns").before(addInput(count,count,"段落","paragraph","paragraphCon",true,null,paragraphs[i]));
+        }
+    }
 
     //添加按钮监听
     $(".addBTN").click(function () {
         $(".paragraphCon:last").after(addInput(count,count,"段落","paragraph","paragraphCon",true,null,null));
+    });
+
+    //输入变化监听
+    $("form").on("change",".paragraph",function () {
+        var paragraphs = "";
+        $(".paragraph").each(function () {
+            var paragraph = $(this).val();
+            if ( paragraph != "") {
+                paragraphs = paragraphs + paragraph +",";
+            }
+        });
+        paragraphs = paragraphs.substring(0,paragraphs.lastIndexOf(","));
+        $("input[name='paragraph']").val(paragraphs);
     });
 
     function addInput(beginNum,overNum,prefix,clazz,clazzContainer,needSerial,placeholder,value) {
