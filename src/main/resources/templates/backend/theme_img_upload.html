@@ -21,7 +21,6 @@
 </head>
 
 <body>
-    <input type="hidden"  id="img_path" th:value="${img_path}">
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
@@ -52,16 +51,17 @@
                     <p id="size_tips"></p>
                     <input type="hidden" id="prevImg" th:value="${prevImg}" th:if="${prevImg != null}">
                     <form action="/themeimgupload" enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="businessId" th:value="${user.id}">
                         <div class="col-sm-10">
                             <select class="form-control m-b" name="themeImg">
                                 <optgroup label="欢迎页">
-                                    <option value="login_pg/login_background.jpg">欢迎页背景</option>
-                                    <option value="login_pg/login_btn.png">参加按钮</option>
+                                    <option th:value="${user.username}+ @{/welcome_pg/background.jpg}">欢迎页背景</option>
+                                    <option th:value="${user.username}+ @{/welcome_pg/join_btn.jpg}">参加按钮</option>
                                 </optgroup>
                                 <optgroup label="详情页">
-                                    <option value="act_info_pg/actinfo_background.jpg">详情页背景</option>
-                                    <option value="act_info_pg/actinfo_background.jpg">详情页LOGO</option>
-                                    <option value="act_info_pg/join_btn.png">提交按钮</option>
+                                    <option th:value="${user.username}+ @{/details_pg/background.jpg}">详情页背景</option>
+                                    <option th:value="${user.username}+ @{/details_pg/logo.jpg}">详情页LOGO</option>
+                                    <option th:value="${user.username}+ @{/details_pg/submit_btn.jpg}">提交按钮</option>
                                 </optgroup>
                             </select>
                         </div>

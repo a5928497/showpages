@@ -2,7 +2,9 @@ package com.yukoon.showpages.controllers;
 
 import com.yukoon.showpages.config.PathConfig;
 import com.yukoon.showpages.entities.User;
+import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.FileUtil;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UploadController extends BasicController {
 
     @Autowired
     private PathConfig pathConfig;
+    @Autowired
+    private UserService userService;
 
     //后台前往图片上传界面
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
@@ -31,8 +35,8 @@ public class UploadController extends BasicController {
             map.put("uploadMsg",uploadMsg);
         }
         User me = whoAmI();
-        map.put("user",me);
         if (null != me && (me.getId() == id || "admin".equals(me.getRole().getRoleName()))) {
+            map.put("user",userService.findById(id));
             return "/backend/theme_img_upload";
         }
         return "redirect:/bus_dashboard/" + me.getId();
@@ -43,17 +47,18 @@ public class UploadController extends BasicController {
     @PostMapping("/themeimgupload")
     public String uploadTheme(@RequestParam("pic")MultipartFile pic, HttpServletRequest request
             , String themeImg, RedirectAttributes attributes){
-        String filePath = pathConfig.getWelcomePageImgPath();
+        User me =whoAmI();
+        String filePath = pathConfig.getWelcomePageImgPath() + StringUtils.substringBeforeLast(themeImg,"/")+"/";
         String fileName = pic.getOriginalFilename();
         String uploadMsg = "图片上传成功!";
         if (!FileUtil.isImg(fileName)){
             uploadMsg = "该文件不是图片格式,请重新上传!";
             attributes.addFlashAttribute("uploadMsg",uploadMsg);
             attributes.addFlashAttribute("prevImg",themeImg);
-            return "redirect:/touploadthemeimg";
+            return "redirect:/themeupload/" + me.getId();
         }
         //重命名文件
-        fileName = themeImg;
+        fileName = StringUtils.substringAfterLast(themeImg,"/");
         try {
             //上传图片
             FileUtil.uploadFile(pic.getBytes(),filePath,fileName);
@@ -61,10 +66,10 @@ public class UploadController extends BasicController {
             uploadMsg = "图片上传出现错误,请重新上传!";
             attributes.addFlashAttribute("uploadMsg",uploadMsg);
             attributes.addFlashAttribute("prevImg",themeImg);
-            return "redirect:/touploadthemeimg";
+            return "redirect:/themeupload/" + me.getId();
         }
         attributes.addFlashAttribute("uploadMsg",uploadMsg);
         attributes.addFlashAttribute("prevImg",themeImg);
-        return "redirect:/touploadthemeimg";
+        return "redirect:/themeupload/" + me.getId();
     }
 }
