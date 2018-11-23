@@ -11,5 +11,29 @@ html,body {
     width: 100%;
     height: 100%;
     /*overflow: hidden;*/
-    /*position: relative;*/
+    position: relative;
+}
+
+.content-warpper {
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 10%;
+}
+
+.content-warpper p{
+    color: white;
+}
+
+.joinBTN {
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 99% 99%;
+    color: transparent;
+    border-color: transparent;
+    outline: none;
+    display: block;
+    width: 50%;
+    height: 40px;
+    margin: 0 auto;
 }

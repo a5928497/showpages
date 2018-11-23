@@ -16,13 +16,13 @@ $(function () {
         count = 1;
         var paragraphs = $paragraph.val().split(",");
         for (var i = 0;i<paragraphs.length;i++) {
-            $(".btns").before(addInput(count,count,"段落","paragraph","paragraphCon",true,null,paragraphs[i]));
+            $(".btns").before(addTextArea(count,count,"段落","paragraph","paragraphCon",true,null,paragraphs[i]));
         }
     }
 
     //添加按钮监听
     $(".addBTN").click(function () {
-        $(".paragraphCon:last").after(addInput(count,count,"段落","paragraph","paragraphCon",true,null,null));
+        $(".paragraphCon:last").after(addTextArea(count,count,"段落","paragraph","paragraphCon",true,null,null));
     });
 
     //输入变化监听
@@ -38,7 +38,7 @@ $(function () {
         $("input[name='paragraph']").val(paragraphs);
     });
 
-    function addInput(beginNum,overNum,prefix,clazz,clazzContainer,needSerial,placeholder,value) {
+    function addTextArea(beginNum,overNum,prefix,clazz,clazzContainer,needSerial,placeholder,value) {
         var result = "";
         //placeholder置空
         if (null == placeholder) {
