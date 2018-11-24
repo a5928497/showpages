@@ -4,24 +4,23 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${business.username}">商家名称</title>
+    <title>详情</title>
     <link th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" rel="stylesheet">
-    <link th:href="@{/css/public/welcome_page.css}" rel="stylesheet">
+    <link th:href="@{/css/public/details_page.css}" rel="stylesheet">
 
 </head>
 
 <body class="gray-bg">
     <div id="main_wrapper">
-        <div class="content-warpper">
-            <p th:each="paragraph:${paragraphs}" th:text="${paragraph}"></p>
-            <button type="button" class="joinBTN"></button>
+        <div class="img_wrapper">
+            <img src="">
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
 
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
-    <script th:src="@{/js/public/welcome_page.js}"></script>
+    <script th:src="@{/js/public/details_page.js}"></script>
 </body>
 
 </html>

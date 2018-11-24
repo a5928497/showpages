@@ -8,6 +8,11 @@ $(function () {
     var localhostPaht=curWwwPath.substring(0,curWwwPath.indexOf(pathName));
     $wrapper = $("#main_wrapper");
     //初始化图片元素
-    $wrapper.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/background.jpg");
-    $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
+    $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/welcome_pg/background.jpg");
+    $joinBTN.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
+
+    $joinBTN.click(function () {
+        window.location.href= localhostPaht + "/details/" + $("#businessName").val();
+        return false;
+    });
 })

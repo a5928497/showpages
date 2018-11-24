@@ -43,7 +43,7 @@ public class PathConfig extends WebMvcConfigurerAdapter {
 	//配置前台显示图片映射路径
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-	    registry.addResourceHandler("/welcomeImg/**").addResourceLocations("file:"+welcomePageImgPath);
+	    registry.addResourceHandler("/themeImg/**").addResourceLocations("file:"+welcomePageImgPath);
         super.addResourceHandlers(registry);
     }
 

@@ -18,7 +18,7 @@ $(function () {
     $sizeTips = $("#size_tips");
     $prevImg = $("#prevImg");
     $themeImg = $("#theme_img");
-    var img_url  = localhostPaht + "/welcomeImg/";
+    var img_url  = localhostPaht + "/themeImg/";
     if ($prevImg.length != 0) {
         $("option[value='"+ $prevImg.val()+"']").attr("selected","selected");
     }

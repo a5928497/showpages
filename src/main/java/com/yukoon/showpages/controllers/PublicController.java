@@ -28,4 +28,12 @@ public class PublicController {
 		map.put("paragraphs",welcomeInfo.getParagraph().split(","));
 		return "/public/welcome_page";
 	}
+
+	//前台访问具体客户详情页
+	@GetMapping("/details/{businessName}")
+	public String toDetailsPage(@PathVariable("businessName")String businessName, Map<String,Object> map)	{
+		User business = userService.findByUsername(businessName);
+		map.put("business",business);
+		return "/public/details_page";
+	}
 }
