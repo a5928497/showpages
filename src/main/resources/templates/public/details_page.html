@@ -13,7 +13,7 @@
 <body class="gray-bg">
     <div id="main_wrapper">
         <div class="img_wrapper">
-            <img src="">
+            <img th:src="@{/themeImg/} + ${business.username} + @{/details_pg/logo.jpg}">
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">

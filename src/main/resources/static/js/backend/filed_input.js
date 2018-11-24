@@ -65,22 +65,22 @@ $(function () {
     
     //类型为时间事件函数
     function showTimes() {
-        $orderGrp.after(addInput(count,count,"除去时段","except-time","timeCon",false,"格式示例：15:00-16:30"));
+        $orderGrp.after(addInput(count,count,"开放时段","available-time","timeCon",false,"格式示例：15:00-16:30"));
         $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字，默认60（单位：分钟）"));
-        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加去除时段</button> ");
-        addAddBTNOnListener(".btns","click",".addBTN","除去时段","except-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
-        addResultOnListener("form","blur",".except-time,.interval");
+        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加开放时段</button> ");
+        addAddBTNOnListener(".btns","click",".addBTN","开放时段","available-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
+        addResultOnListener("form","blur",".available-time,.interval");
     }
 
     //回显类型为时间事件函数
     function echoTimes(value) {
         $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字，默认60（单位：分钟）",value[0]));
         for (var i=1;i<value.length;i++) {
-            $orderGrp.after(addInput(count,count,"除去时段","except-time","timeCon",false,"格式示例：15:00-16:30",value[i]));
+            $orderGrp.after(addInput(count,count,"开放时段","available-time","timeCon",false,"格式示例：15:00-16:30",value[i]));
         }
-        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加去除时段</button> ");
-        addAddBTNOnListener(".btns","click",".addBTN","除去时段","except-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
-        addResultOnListener("form","blur",".except-time,.interval");
+        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加开放时段</button> ");
+        addAddBTNOnListener(".btns","click",".addBTN","开放时段","available-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
+        addResultOnListener("form","blur",".available-time,.interval");
     }
     
     //类型为多选事件函数

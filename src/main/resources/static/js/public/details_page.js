@@ -7,9 +7,7 @@ $(function () {
     //前缀
     var localhostPaht=curWwwPath.substring(0,curWwwPath.indexOf(pathName));
     $wrapper = $("#main_wrapper");
-    $img = $(".img_wrapper img");
     //初始化图片元素
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
-    $img.attr("src",localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/logo.jpg");
     // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
 })
