@@ -6,18 +6,31 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class Field2CustomService {
     @Autowired
     private CustomFieldService customFieldService;
 
-    private Field2Custom fieldResolver(Field2Custom field2Custom) {
-        switch (field2Custom.getType()) {
-
-            default:
-                break;
+    public List<Field2Custom> getAllField2CutsomByBusinessId(Integer businessId) {
+        List<CustomField> customFields = customFieldService.findAllByBusinessId(businessId);
+        List<Field2Custom> field2Customs = new ArrayList<>();
+        for (CustomField customField : customFields) {
+            field2Customs.add(fieldHandler(fieldConvertor(customField)));
         }
-        return null;
+        return field2Customs;
+    }
+
+    private Field2Custom fieldHandler(Field2Custom field2Custom) {
+        switch (field2Custom.getType()) {
+            case 6:
+                return timesResolver(field2Custom);
+            default:
+                return field2Custom;
+        }
     }
 
     private Field2Custom fieldConvertor(CustomField customField) {
@@ -40,13 +53,18 @@ public class Field2CustomService {
             totalTime = (overHour - beginHour) * 60;
             totalTime = totalTime + (overMin - beginMin);
             for (int j = 0;j<(totalTime/interval);j++) {
-                overMin = beginMin + (interval -1);
-                overHour = beginHour;
-                if (overMin >= 60) {
-                    overHour = beginHour + (interval/60);
-                    overMin = overMin + (interval%60) - interval;
-                    overHour = overMin >= 60?overHour +1:overHour;
-                    overMin = overMin >=60? overMin - 60: overMin;
+                if (j == (totalTime/interval)-1 && (totalTime%interval) == 0 ) {
+                    overMin = Integer.valueOf(StringUtils.substringAfterLast(conditions[i],":"));
+                    overHour = Integer.valueOf(StringUtils.substringAfter(StringUtils.substringBeforeLast(conditions[i], ":"),"-"));;
+                }else {
+                    overMin = beginMin + (interval -1);
+                    overHour = beginHour;
+                    if (overMin >= 60) {
+                        overHour = beginHour + (interval/60);
+                        overMin = overMin + (interval%60) - interval;
+                        overHour = overMin >= 60?overHour +1:overHour;
+                        overMin = overMin >=60? overMin - 60: overMin;
+                    }
                 }
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin)+ ",");
                 //生成下一个时间段
@@ -67,10 +85,10 @@ public class Field2CustomService {
                 overHour = Integer.valueOf(StringUtils.substringAfter(StringUtils.substringBeforeLast(conditions[i], ":"),"-"));;
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin) + ",");
             }
-            String result = StringUtils.substringBeforeLast(stringBuffer.toString(),",");
-            System.out.println(result);
         }
-        return null;
+        String result = StringUtils.substringBeforeLast(stringBuffer.toString(),",");
+        field2Custom.setCondition(result);
+        return field2Custom;
     }
 
     private String singleHandler(Integer num) {
@@ -80,7 +98,7 @@ public class Field2CustomService {
     public static void main(String[] args) {
         Field2Custom field2Custom = new Field2Custom();
 //        field2Custom.setCondition("45,16:00-17:33");
-        field2Custom.setCondition("45,16:00-17:33,18:09-18:55,20:33-23:30");
+        field2Custom.setCondition("30,16:00-17:30,18:30-19:30");
         new Field2CustomService().timesResolver(field2Custom);
     }
 }
