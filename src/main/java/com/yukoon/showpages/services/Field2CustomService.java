@@ -47,7 +47,6 @@ public class Field2CustomService {
                     overMin = overMin + (interval%60) - interval;
                     overHour = overMin >= 60?overHour +1:overHour;
                     overMin = overMin >=60? overMin - 60: overMin;
-
                 }
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin)+ ",");
                 //生成下一个时间段
@@ -64,14 +63,8 @@ public class Field2CustomService {
                     beginHour = beginHour + 1;
                     beginMin = beginMin >=60?beginMin - 60:beginMin;
                 }
-                overMin = beginMin + totalTime%interval;
-                overHour = beginHour;
-                if (overMin >= 60) {
-                    overHour = beginHour + (overMin/60);
-                    overMin = overMin + (interval%60) - interval;
-                    overHour = overMin >= 60?overHour +1:overHour;
-                    overMin = overMin >=60? overMin - 60: overMin;
-                }
+                overMin = Integer.valueOf(StringUtils.substringAfterLast(conditions[i],":"));
+                overHour = Integer.valueOf(StringUtils.substringAfter(StringUtils.substringBeforeLast(conditions[i], ":"),"-"));;
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin) + ",");
             }
             String result = StringUtils.substringBeforeLast(stringBuffer.toString(),",");
