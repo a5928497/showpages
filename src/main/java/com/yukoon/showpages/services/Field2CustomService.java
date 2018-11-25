@@ -39,7 +39,7 @@ public class Field2CustomService {
             Integer overMin = Integer.valueOf(StringUtils.substringAfterLast(conditions[i],":"));
             totalTime = (overHour - beginHour) * 60;
             totalTime = totalTime + (overMin - beginMin);
-            for (int j = 0;i<=(totalTime/interval);i++) {
+            for (int j = 0;j<(totalTime/interval);j++) {
                 overMin = beginMin + (interval -1);
                 overHour = beginHour;
                 if (overMin >= 60) {
@@ -47,7 +47,7 @@ public class Field2CustomService {
                     overMin = overMin + (interval%60) - interval;
                     overHour = overMin >= 60?overHour +1:overHour;
                     overMin = overMin >=60? overMin - 60: overMin;
-                    System.out.println(overMin);
+
                 }
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin)+ ",");
                 //生成下一个时间段
@@ -86,7 +86,8 @@ public class Field2CustomService {
 
     public static void main(String[] args) {
         Field2Custom field2Custom = new Field2Custom();
-        field2Custom.setCondition("45,16:00-18:33");
+//        field2Custom.setCondition("45,16:00-17:33");
+        field2Custom.setCondition("45,16:00-17:33,18:09-18:55,20:33-23:30");
         new Field2CustomService().timesResolver(field2Custom);
     }
 }
