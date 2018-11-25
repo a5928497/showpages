@@ -44,7 +44,10 @@ public class Field2CustomService {
                 overHour = beginHour;
                 if (overMin >= 60) {
                     overHour = beginHour + (interval/60);
-                    overMin = overMin - interval >=0?overMin - interval: (-(overMin - interval))%60;
+                    overMin = overMin + (interval%60) - interval;
+                    overHour = overMin >= 60?overHour +1:overHour;
+                    overMin = overMin >=60? overMin - 60: overMin;
+                    System.out.println(overMin);
                 }
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin)+ ",");
                 //生成下一个时间段
@@ -64,8 +67,10 @@ public class Field2CustomService {
                 overMin = beginMin + totalTime%interval;
                 overHour = beginHour;
                 if (overMin >= 60) {
-                    overHour = beginHour +1;
-                    overMin = overMin -60;
+                    overHour = beginHour + (overMin/60);
+                    overMin = overMin + (interval%60) - interval;
+                    overHour = overMin >= 60?overHour +1:overHour;
+                    overMin = overMin >=60? overMin - 60: overMin;
                 }
                 stringBuffer.append(beginHour + ":" + singleHandler(beginMin) + "-" + overHour + ":" + singleHandler(overMin) + ",");
             }
@@ -81,8 +86,7 @@ public class Field2CustomService {
 
     public static void main(String[] args) {
         Field2Custom field2Custom = new Field2Custom();
-        field2Custom.setCondition("130,16:00-20:01");
+        field2Custom.setCondition("45,16:00-18:33");
         new Field2CustomService().timesResolver(field2Custom);
-        System.out.println("11"+ -(1-30));
     }
 }
