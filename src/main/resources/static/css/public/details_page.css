@@ -34,3 +34,14 @@ html,body {
 .img_wrapper img {
     width: 80%;
 }
+
+.shortText {
+    position: absolute;
+    width: 80%;
+    text-align: center;
+    left: 10%;
+}
+
+.shortText p {
+
+}

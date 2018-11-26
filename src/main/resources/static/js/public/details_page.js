@@ -10,4 +10,12 @@ $(function () {
     //初始化图片元素
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
     // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
+    
+    function addShortText(title,key) {
+        var result = "<div class=\"shortText\">\n" +
+            "            <label>"+ title + "</label>\n" +
+            "            <input type=\"text\" name=\""+ key + "\">\n" +
+            "        </div>"
+        return result
+    }
 })

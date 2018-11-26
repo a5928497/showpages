@@ -15,6 +15,10 @@
         <div class="img_wrapper">
             <img th:src="@{/themeImg/} + ${business.username} + @{/details_pg/logo.jpg}">
         </div>
+        <!--<div class="shortText">-->
+            <!--<label></label>-->
+            <!--<input type="text">-->
+        <!--</div>-->
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
     <input type="hidden" th:each="field2Custom:${field2Customs}"
