@@ -35,13 +35,26 @@ html,body {
     width: 80%;
 }
 
-.shortText {
+.conteng_wrapper {
+    width: 100%;
     position: absolute;
-    width: 80%;
-    text-align: center;
-    left: 10%;
+    top: 62%;
 }
 
+form {
+    width: 100%;
+}
+
+.shortText,.longText {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+.longText textarea {
+    width: 85%;
+    height: 100px;
+    resize: none;
+}
 .shortText p {
 
 }

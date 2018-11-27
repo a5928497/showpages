@@ -1,5 +1,6 @@
 $(function () {
-    // $joinBTN = $(".joinBTN");
+    //全局计数变量
+    var key_count =1;
     //完整路径
     var curWwwPath=window.document.location.href;
     //后缀
@@ -11,11 +12,21 @@ $(function () {
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
     // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
     
-    function addShortText(title,key) {
+    function addShortText(title) {
         var result = "<div class=\"shortText\">\n" +
             "            <label>"+ title + "</label>\n" +
-            "            <input type=\"text\" name=\""+ key + "\">\n" +
-            "        </div>"
+            "            <input type=\"text\" name=\"key"+ key_count + "\">\n" +
+            "        </div>";
+        key_count++;
         return result
+    }
+    
+    function addLongText(title) {
+        var result = "<div class=\"longText\">\n" +
+            "                    <p></p>\n" +
+            "                    <textarea name=\"key"+ key_count +"\"></textarea>\n" +
+            "                </div>";
+        key_count++;
+        return result;
     }
 })
