@@ -29,4 +29,19 @@ $(function () {
         key_count++;
         return result;
     }
+
+    function addRaios(selector,parentSelector) {
+        $selector = $(selector);
+        var options = $selector.attr("condition").split(",");
+        var result = "<div class=\"radioContent\">\n";
+        for (var i = 0;i<options.length  ;i++) {
+            result = result + addSingleRadio()
+        }
+    }
+
+    function addSingleRadio(title,value) {
+        var result = "<label><input name=\"key"+ key_count +"\" type=\"radio\" value=\""+ value+"\">" + title +"</label>\n";
+        key_count++;
+        return result;
+    }
 })
