@@ -12,11 +12,57 @@ $(function () {
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
     // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
 
-    addTimeSelect("input[title='预约时间']","form");
+    //生成各个选项
+    $fields = $(".fields");
+    if ($fields.length > 0) {
+        var count = 0;
+        do {
+            var i = 1;
+            var selector = ".fields[order=\""+ i +"\"]";
+            $field = $(selector);
+            if (0 != $field.length) {
+                addSwitch($(selector).attr("field_type"),selector);
+                console.log(count);
+                count++;
+            }
+            i++;
+        }while (count == $fields.length)
+    }
+
+    //根据类型执行相应生成函数
+    function addSwitch(type,selector) {
+        $selector = $(selector);
+        switch (type) {
+            case "1":
+                $("form").append(addShortText($selector.attr("title")));
+                break;
+            case "2":
+                $("form").append(addLongText($selector.attr("title")));
+                break;
+            case "3":
+                addRaios(selector,"form");
+                break;
+            case "4":
+                addCheckBox(selector,"form");
+                break;
+            case "5":
+                $("form").append(addDateInput($selector.attr("title")));
+                break;
+            case "6":
+                addTimeSelect(selector,"form");
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    // addTimeSelect("input[title='预约时间']","form");
     // addRaios("input[title='性别']","form");
     // addCheckBox("input[title='你喜欢吃什么水果']","form");
     function addShortText(title) {
         var result = "<div class=\"shortText\">\n" +
+            "            <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ title+"\">\n" +
             "            <label>"+ title + "</label>\n" +
             "            <input type=\"text\" name=\"value"+ key_count + "\">\n" +
             "        </div>";
@@ -26,7 +72,8 @@ $(function () {
     
     function addLongText(title) {
         var result = "<div class=\"longText\">\n" +
-            "                    <p></p>\n" +
+            "            <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ title+"\">\n" +
+            "                    <p>"+ title +"</p>\n" +
             "                    <textarea name=\"value"+ key_count +"\"></textarea>\n" +
             "                </div>";
         key_count++;

@@ -50,8 +50,8 @@
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
-    <input th:type="hidden" th:each="field2Custom:${field2Customs}"
-           th:attr="type= ${field2Custom.type},title=${field2Custom.title},order=${field2Custom.order},condition=${field2Custom.condition}">
+    <input type="hidden" class="fields" th:each="field2Custom:${field2Customs}"
+           th:attr="field_type= ${field2Custom.type},title=${field2Custom.title},order=${field2Custom.order},condition=${field2Custom.condition}">
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/public/details_page.js}"></script>
