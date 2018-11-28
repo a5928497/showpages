@@ -11,11 +11,14 @@ $(function () {
     //初始化图片元素
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
     // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
-    
+
+    addTimeSelect("input[title='预约时间']","form");
+    // addRaios("input[title='性别']","form");
+    // addCheckBox("input[title='你喜欢吃什么水果']","form");
     function addShortText(title) {
         var result = "<div class=\"shortText\">\n" +
             "            <label>"+ title + "</label>\n" +
-            "            <input type=\"text\" name=\"key"+ key_count + "\">\n" +
+            "            <input type=\"text\" name=\"value"+ key_count + "\">\n" +
             "        </div>";
         key_count++;
         return result
@@ -24,7 +27,7 @@ $(function () {
     function addLongText(title) {
         var result = "<div class=\"longText\">\n" +
             "                    <p></p>\n" +
-            "                    <textarea name=\"key"+ key_count +"\"></textarea>\n" +
+            "                    <textarea name=\"value"+ key_count +"\"></textarea>\n" +
             "                </div>";
         key_count++;
         return result;
@@ -33,14 +36,67 @@ $(function () {
     function addRaios(selector,parentSelector) {
         $selector = $(selector);
         var options = $selector.attr("condition").split(",");
-        var result = "<div class=\"radioContent\">\n";
+        var result = "<div class=\"radioContent\">\n" +
+                        "<p>" +$selector.attr("title") +"</p>";
         for (var i = 0;i<options.length  ;i++) {
-            result = result + addSingleRadio(options[i],options[i]);
+            result = result + addSingleRadio(options[i]);
         }
+        key_count++;
+        result = result + "</div>";
+        $(parentSelector).append(result);
     }
 
-    function addSingleRadio(title,value) {
-        var result = "<label><input name=\"key"+ key_count +"\" type=\"radio\" value=\""+ value+"\">" + title +"</label>\n";
+    function addSingleRadio(value) {
+        var result = "<label><input name=\"value"+ key_count +"\" type=\"radio\" value=\""+ value+"\">" + value +"</label>\n";
+        return result;
+    }
+
+    function addCheckBox(selector,parentSelector) {
+        $selector = $(selector);
+        var options = $selector.attr("condition").split(",");
+        var result = "<div class=\"checkboxContent\">\n" +
+            "<p>" +$selector.attr("title") +"</p>";
+        for (var i = 0;i<options.length  ;i++) {
+            result = result + addSingleCheckBox(options[i]);
+        }
+        key_count++;
+        result = result + "</div>";
+        $(parentSelector).append(result);
+    }
+
+    function addSingleCheckBox(value) {
+        var result = "<label><input type=\"checkbox\" name=\"value" + key_count +"\" value=\""+ value+"\">" + value +"</label>\n";
+        return result;
+    }
+
+    function addTimeSelect(selector,parentSelector) {
+        $selector = $(selector);
+        var title = $selector.attr("title");
+        var options = $selector.attr("condition").split(",");
+        var result = "<div class=\"timeContent\">\n" +
+            "                    <input type=\"hidden\" name=\"key"+ key_count +"\" value=\"key"+ key_count+"\">\n" +
+            "                    <label>"+ title +"</label>\n" +
+            "                    <select name=\"value"+ key_count+"\">\n";
+        for (var i = 0;i<options.length;i++) {
+            result = result + addSingleTime(options[i]);
+        }
+        key_count++;
+        result = result + "</select>\n" +
+            "                </div>\n";
+        $(parentSelector).append(result);
+    }
+
+    function addSingleTime(value) {
+        var result = "<option value=\""+ value +"\">" + value +"</option>";
+        return result;
+    }
+
+    function addDateInput(title) {
+        var result = "<div class=\"dateContent\">\n" +
+            "                    <input type=\"hidden\" name=\"key"+ key_count+"\" value=\"\">\n" +
+            "                    <label>"+ title+"</label>\n" +
+            "                    <input type=\"date\" class=\"date_input\" name=\"value"+ key_count+"\">\n" +
+            "                </div>";
         key_count++;
         return result;
     }

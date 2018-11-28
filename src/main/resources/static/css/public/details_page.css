@@ -45,16 +45,33 @@ form {
     width: 100%;
 }
 
-.shortText,.longText {
+.shortText,.longText,.radioContent,.checkboxContent,.dateContent,.timeContent {
     width: 80%;
     text-align: center;
     margin: 0 auto;
+}
+
+.radioContent,.checkboxContent {
+    text-align: left;
+}
+
+.radioContent p,.radioContent label,.checkboxContent p,.checkboxContent label,.dateContent label,.timeContent label {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.dateContent .date_input,.timeContent select {
+    font-weight: bold;
+    width: 60%;
+    text-align: center;
+}
+.timeContent select {
+    text-align-last: center;
+    height: 20px;
+    padding: 0 1%;
 }
 .longText textarea {
     width: 85%;
     height: 100px;
     resize: none;
-}
-.shortText p {
-
 }
