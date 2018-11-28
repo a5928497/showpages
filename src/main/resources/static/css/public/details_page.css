@@ -3,13 +3,14 @@ html,body {
     padding: 0;
     width: 100%;
     height: 100%;
+    /*background-color: rgb(145,13,9);*/
 }
 #main_wrapper
 {
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 100%;
-    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
     /*overflow: hidden;*/
     position: relative;
 }
@@ -45,17 +46,29 @@ form {
     width: 100%;
 }
 
-.shortText,.longText,.radioContent,.checkboxContent,.dateContent,.timeContent {
+.shortText,.longText,.radioContent,.checkboxContent,.dateContent,.timeContent,.btnWrapper {
     width: 80%;
-    text-align: center;
     margin: 0 auto;
+}
+
+.btnWrapper button {
+    display: block;
+    width: 50%;
+    height: 40px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: 99% 99%;
+    color: transparent;
+    border-color: transparent;
+    outline: none;
 }
 
 .radioContent,.checkboxContent {
     text-align: left;
 }
 
-.radioContent p,.radioContent label,.checkboxContent p,.checkboxContent label,.dateContent label,.timeContent label {
+.radioContent p,.radioContent label,.checkboxContent p,.checkboxContent label,.dateContent label,.timeContent label,.longText p {
     font-weight: bold;
     font-size: 16px;
 }

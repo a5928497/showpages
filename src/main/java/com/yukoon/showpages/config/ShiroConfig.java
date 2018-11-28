@@ -48,6 +48,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/themeImg/**","anon");
 		filterChainDefinitionMap.put("/introduce/**","anon");
 		filterChainDefinitionMap.put("/details/**","anon");
+		filterChainDefinitionMap.put("/result**","anon");
 		filterChainDefinitionMap.put("/test/**","anon");
 		filterChainDefinitionMap.put("/*", "authc");//表示需要认证才可以访问
 		filterChainDefinitionMap.put("/**", "authc");//表示需要认证才可以访问

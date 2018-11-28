@@ -8,48 +8,45 @@ $(function () {
     //前缀
     var localhostPaht=curWwwPath.substring(0,curWwwPath.indexOf(pathName));
     $wrapper = $("#main_wrapper");
+    $submitBtn = $("#submitBtn");
     //初始化图片元素
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
-    // $joinBTN.css("background-image","url("+ localhostPaht +"/welcomeImg/" + $("#businessName").val() + "/welcome_pg/join_btn.jpg");
+    $submitBtn.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/submit_btn.jpg");
 
     //生成各个选项
     $fields = $(".fields");
     if ($fields.length > 0) {
-        var count = 0;
-        do {
-            var i = 1;
-            var selector = ".fields[order=\""+ i +"\"]";
-            $field = $(selector);
-            if (0 != $field.length) {
-                addSwitch($(selector).attr("field_type"),selector);
-                console.log(count);
-                count++;
-            }
-            i++;
-        }while (count == $fields.length)
+        $fields.each(function () {
+            addSwitch($(this).attr("field_type"),$(this));
+        });
+        // $("body").css("height",resizeBackground());
+    }
+
+    function resizeBackground() {
+        return $(".conteng_wrapper").position().top + $(".conteng_wrapper").height();
     }
 
     //根据类型执行相应生成函数
     function addSwitch(type,selector) {
-        $selector = $(selector);
+        // $selector = $(selector);
         switch (type) {
             case "1":
-                $("form").append(addShortText($selector.attr("title")));
+                $(".btnWrapper").before(addShortText(selector.attr("title")));
                 break;
             case "2":
-                $("form").append(addLongText($selector.attr("title")));
+                $(".btnWrapper").before(addLongText(selector.attr("title")));
                 break;
             case "3":
-                addRaios(selector,"form");
+                addRaios(selector,".btnWrapper");
                 break;
             case "4":
-                addCheckBox(selector,"form");
+                addCheckBox(selector,".btnWrapper");
                 break;
             case "5":
-                $("form").append(addDateInput($selector.attr("title")));
+                $(".btnWrapper").before(addDateInput(selector.attr("title")));
                 break;
             case "6":
-                addTimeSelect(selector,"form");
+                addTimeSelect(selector,".btnWrapper");
                 break;
             default:
                 break;
@@ -57,9 +54,6 @@ $(function () {
 
     }
 
-    // addTimeSelect("input[title='预约时间']","form");
-    // addRaios("input[title='性别']","form");
-    // addCheckBox("input[title='你喜欢吃什么水果']","form");
     function addShortText(title) {
         var result = "<div class=\"shortText\">\n" +
             "            <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ title+"\">\n" +
@@ -80,17 +74,17 @@ $(function () {
         return result;
     }
 
-    function addRaios(selector,parentSelector) {
-        $selector = $(selector);
-        var options = $selector.attr("condition").split(",");
+    function addRaios(selector,subSelector) {
+        var options = selector.attr("condition").split(",");
         var result = "<div class=\"radioContent\">\n" +
-                        "<p>" +$selector.attr("title") +"</p>";
+            "            <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ selector.attr("title")+"\">\n" +
+                        "<p>" +selector.attr("title") +"</p>";
         for (var i = 0;i<options.length  ;i++) {
             result = result + addSingleRadio(options[i]);
         }
         key_count++;
         result = result + "</div>";
-        $(parentSelector).append(result);
+        $(subSelector).before(result);
     }
 
     function addSingleRadio(value) {
@@ -98,17 +92,17 @@ $(function () {
         return result;
     }
 
-    function addCheckBox(selector,parentSelector) {
-        $selector = $(selector);
-        var options = $selector.attr("condition").split(",");
+    function addCheckBox(selector,subSelector) {
+        var options = selector.attr("condition").split(",");
         var result = "<div class=\"checkboxContent\">\n" +
-            "<p>" +$selector.attr("title") +"</p>";
+            "            <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ selector.attr("title")+"\">\n" +
+            "<p>" +selector.attr("title") +"</p>";
         for (var i = 0;i<options.length  ;i++) {
             result = result + addSingleCheckBox(options[i]);
         }
         key_count++;
         result = result + "</div>";
-        $(parentSelector).append(result);
+        $(subSelector).before(result);
     }
 
     function addSingleCheckBox(value) {
@@ -116,12 +110,11 @@ $(function () {
         return result;
     }
 
-    function addTimeSelect(selector,parentSelector) {
-        $selector = $(selector);
-        var title = $selector.attr("title");
-        var options = $selector.attr("condition").split(",");
+    function addTimeSelect(selector,subSelector) {
+        var title = selector.attr("title");
+        var options = selector.attr("condition").split(",");
         var result = "<div class=\"timeContent\">\n" +
-            "                    <input type=\"hidden\" name=\"key"+ key_count +"\" value=\"key"+ key_count+"\">\n" +
+            "                    <input type=\"hidden\" name=\"key"+ key_count +"\" value=\""+ title+"\">\n" +
             "                    <label>"+ title +"</label>\n" +
             "                    <select name=\"value"+ key_count+"\">\n";
         for (var i = 0;i<options.length;i++) {
@@ -130,7 +123,7 @@ $(function () {
         key_count++;
         result = result + "</select>\n" +
             "                </div>\n";
-        $(parentSelector).append(result);
+        $(subSelector).before(result);
     }
 
     function addSingleTime(value) {
@@ -140,7 +133,7 @@ $(function () {
 
     function addDateInput(title) {
         var result = "<div class=\"dateContent\">\n" +
-            "                    <input type=\"hidden\" name=\"key"+ key_count+"\" value=\"\">\n" +
+            "                    <input type=\"hidden\" name=\"key"+ key_count+"\" value=\""+ title+"\">\n" +
             "                    <label>"+ title+"</label>\n" +
             "                    <input type=\"date\" class=\"date_input\" name=\"value"+ key_count+"\">\n" +
             "                </div>";
