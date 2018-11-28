@@ -35,7 +35,7 @@ $(function () {
         var options = $selector.attr("condition").split(",");
         var result = "<div class=\"radioContent\">\n";
         for (var i = 0;i<options.length  ;i++) {
-            result = result + addSingleRadio()
+            result = result + addSingleRadio(options[i],options[i]);
         }
     }
 
