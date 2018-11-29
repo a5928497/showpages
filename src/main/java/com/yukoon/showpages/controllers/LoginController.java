@@ -1,9 +1,11 @@
 package com.yukoon.showpages.controllers;
 
 import com.yukoon.showpages.entities.Permission;
+import com.yukoon.showpages.entities.Results;
 import com.yukoon.showpages.entities.Role;
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.services.PermissionService;
+import com.yukoon.showpages.services.ResultsService;
 import com.yukoon.showpages.services.RoleService;
 import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.EncodeUtil;
@@ -31,6 +33,8 @@ public class LoginController {
     private RoleService roleService;
     @Autowired
     private PermissionService permissionService;
+    @Autowired
+    private ResultsService resultsService;
 
     //前往后台登录界面
     @GetMapping("/backend")
@@ -56,6 +60,11 @@ public class LoginController {
     @GetMapping("/bus_dashboard/{id}")
     public String toBusDashboard(@PathVariable("id")Integer id,Map<String,Object> map) {
         User user = userService.findById(id);
+        List<Results> newResults =resultsService.findNewsByBussinessId(id);
+        List<Results> allResults = resultsService.findAllByBusinessId(id);
+        map.put("newNum",newResults.size());
+        map.put("totalNum",allResults.size());
+        resultsService.setOld(newResults);
         map.put("user",user);
         return "/backend/bus_dashboard";
     }

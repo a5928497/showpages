@@ -18,6 +18,10 @@ public class Results {
 	@Id
 	private Integer id;
 
+	//0为旧 1为新
+	@Column(name = "IS_NEW")
+	private Integer isNew;
+
 	@ManyToOne
 	@JoinColumn(name = "BUSINESS_ID")
 	private User business;
