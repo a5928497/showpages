@@ -95,6 +95,11 @@ public class UserController {
 		if(currentUser.isAuthenticated() || currentUser.isRemembered()) {
 			String username = (String) currentUser.getPrincipal();
 			User user = userService.findByUsername(username);
+			if ("admin".equals(user.getRole().getRoleName())) {
+			    map.put("back_url","/admin_dashboard");
+            }else {
+			    map.put("back_url","/bus_dashboard/"+user.getId());
+            }
 			map.put("id",user.getId());
 			return "/backend/update_password_input";
 		}else {

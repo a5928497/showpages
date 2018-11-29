@@ -64,7 +64,6 @@ public class LoginController {
         List<Results> allResults = resultsService.findAllByBusinessId(id);
         map.put("newNum",newResults.size());
         map.put("totalNum",allResults.size());
-        resultsService.setOld(newResults);
         map.put("user",user);
         return "/backend/bus_dashboard";
     }
