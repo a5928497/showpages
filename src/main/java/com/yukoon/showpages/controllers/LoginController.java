@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class LoginController {
+public class LoginController extends BasicController{
     @Autowired
     private UserService userService;
     @Autowired
@@ -59,13 +59,24 @@ public class LoginController {
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/bus_dashboard/{id}")
     public String toBusDashboard(@PathVariable("id")Integer id,Map<String,Object> map) {
-        User user = userService.findById(id);
-        List<Results> newResults =resultsService.findNewsByBussinessId(id);
-        List<Results> allResults = resultsService.findAllByBusinessId(id);
-        map.put("newNum",newResults.size());
-        map.put("totalNum",allResults.size());
-        map.put("user",user);
-        return "/backend/bus_dashboard";
+        User me = whoAmI();
+        if (null != me && (me.getId() == id || "admin".equals(me.getRole().getRoleName()))) {
+            User user = userService.findById(id);
+            List<Results> newResults =resultsService.findNewsByBussinessId(id);
+            List<Results> allResults = resultsService.findAllByBusinessId(id);
+            map.put("user",user);
+            map.put("newNum",newResults.size());
+            map.put("totalNum",allResults.size());
+            return "/backend/bus_dashboard";
+        }else if (null != me) {
+            List<Results> newResults =resultsService.findNewsByBussinessId(me.getId());
+            List<Results> allResults = resultsService.findAllByBusinessId(me.getId());
+            map.put("user",me);
+            map.put("newNum",newResults.size());
+            map.put("totalNum",allResults.size());
+            return "/backend/bus_dashboard";
+        }
+        return "redirect:/logout";
     }
 
     //处理登录请求
