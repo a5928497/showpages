@@ -104,8 +104,10 @@ $(function () {
     //类型为单选事件函数
     function showRadio() {
         $orderGrp.after(addInput(count,4,"选项","radio","radioCon",true,null,null));
+        $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加选项</button> ");
         //使用事件委派获取各单选项内容
         addResultOnListener("form","blur",".radio");
+        addAddBTNOnListener(".btns","click",".addBTN","选项","radio","radioCon",".radioCon:last",true);
     }
     
     //回显类型为单选事件函数

@@ -98,6 +98,6 @@ public class FieldController extends BasicController{
             customField.setStatus(0);
             customFieldService.saveField(customField);
         }
-        return "redirect:/fields/" + customField.getId();
+        return "redirect:/fields/" + customField.getBusiness().getId();
     }
 }
