@@ -134,11 +134,13 @@ public class UserController extends BasicController {
         if (null != me) {
             map.put("details_url","/details/"+me.getUsername());
             map.put("introduce_url","/introduce/"+me.getUsername());
+            map.put("id",me.getId());
             return "/backend/QR_code";
         }else if ("admin".equals(me.getRole().getRoleName())) {
             User business = userService.findById(id);
             map.put("details_url","/details/"+business.getUsername());
             map.put("introduce_url","/introduce/"+business.getUsername());
+            map.put("id",id);
             return "/backend/QR_code";
         }
         return "redirect:/logout";
