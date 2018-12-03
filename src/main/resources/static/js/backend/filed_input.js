@@ -1,5 +1,6 @@
 $(function () {
     $orderGrp = $(".order-group");
+    $btnGrp = $(".btn_groups");
     //全局选项数计算变量
     var count = 1;
     //返回按钮事件
@@ -49,7 +50,7 @@ $(function () {
         $("select option[value='"+ type + "']").attr("selected","selected");
         switch (type) {
             case "3" :
-                echoRadio(conditions);
+                echoRadio(conditions.sort());
                 break;
             case "4" :
                 echoCheckbox(conditions);
@@ -76,7 +77,7 @@ $(function () {
     function echoTimes(value) {
         $orderGrp.after(addInput(count,count,"时间间隔","interval","timeCon",false,"直接输入数字，默认60（单位：分钟）",value[0]));
         for (var i=1;i<value.length;i++) {
-            $orderGrp.after(addInput(count,count,"开放时段","available-time","timeCon",false,"格式示例：15:00-16:30",value[i]));
+            $btnGrp.before(addInput(count,count,"开放时段","available-time","timeCon",false,"格式示例：15:00-16:30",value[i]));
         }
         $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加开放时段</button> ");
         addAddBTNOnListener(".btns","click",".addBTN","开放时段","available-time","timeCon",".timeCon:last",false,"格式示例：15:00-16:30");
@@ -94,7 +95,7 @@ $(function () {
     //回显类型为多选事件函数
     function echoCheckbox(value) {
         for (var i=0;i<value.length;i++) {
-            $orderGrp.after(addInput(count,count,"选项","checkbox","checkboxCon",true,null,value[i]));
+            $btnGrp.before(addInput(count,count,"选项","checkbox","checkboxCon",true,null,value[i]));
         }
         $(".backBTN").before("<button class=\"btn btn-success addBTN\" type=\"button\">增加选项</button> ");
         addResultOnListener("form","blur",".checkbox");
@@ -113,7 +114,7 @@ $(function () {
     //回显类型为单选事件函数
     function echoRadio(value) {
         for (var i=0;i<value.length;i++) {
-            $orderGrp.after(addInput(count,count,"选项","radio","radioCon",true,null,value[i]));
+            $btnGrp.before(addInput(count,count,"选项","radio","radioCon",true,null,value[i]));
         }
         //使用事件委派获取各单选项内容
         addResultOnListener("form","blur",".radio");
@@ -207,5 +208,19 @@ $(function () {
             forceParse: false,
             autoclose: true
         });
+    }
+
+    function compare(prop) {
+        return function (obj1,obj2) {
+            var val1 = obj1[prop];
+            var val2 = obj2[prop];
+            if (val1 < val2) {
+                return -1;
+            }else if (val1 > val2) {
+                return 1;
+            }else {
+                return 0;
+            }
+        }
     }
 });
