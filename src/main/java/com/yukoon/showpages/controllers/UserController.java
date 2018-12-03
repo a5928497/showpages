@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.Map;
 
 @Controller
-public class UserController {
+public class UserController extends BasicController {
     @Autowired
     private UserService userService;
     @Autowired
@@ -125,6 +125,24 @@ public class UserController {
     		return "redirect:/updatepsw";
 		}
 	}
+
+	//后台前往查询前台二维码及连接
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @GetMapping("/qrcodes/{id}")
+    public String toQRCodes(@PathVariable("id")Integer id, Map<String,Object> map) {
+        User me = whoAmI();
+        if (null != me) {
+            map.put("details_url","/details/"+me.getUsername());
+            map.put("introduce_url","/introduce/"+me.getUsername());
+            return "/backend/QR_code";
+        }else if ("admin".equals(me.getRole().getRoleName())) {
+            User business = userService.findById(id);
+            map.put("details_url","/details/"+business.getUsername());
+            map.put("introduce_url","/introduce/"+business.getUsername());
+            return "/backend/QR_code";
+        }
+        return "redirect:/logout";
+    }
 
 	//后台检查账号是否唯一
     @ResponseBody
