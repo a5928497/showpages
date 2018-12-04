@@ -6,13 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
+
 @Service
 public class ColorService {
     @Autowired
     private ColorsRepo colorsRepo;
 
+    private final static String INIT_COLOR = "#000000";
+
     @Transactional
-    public Colors saveColors(Colors colors) {
+    public Colors saveColors(Colors colors){
+        if ("".equals(colors.getDetailsPageFontColor()) || null == colors.getDetailsPageFontColor()) {
+            colors.setDetailsPageFontColor(INIT_COLOR);
+        }
+        if ("".equals(colors.getDetailsPageBackGroundColor()) || null == colors.getDetailsPageBackGroundColor()) {
+            colors.setDetailsPageBackGroundColor(INIT_COLOR);
+        }
+        if ("".equals(colors.getWelcomePageFontColor()) || null == colors.getWelcomePageFontColor()) {
+            colors.setWelcomePageFontColor(INIT_COLOR);
+        }
         return colorsRepo.saveAndFlush(colors);
     }
 

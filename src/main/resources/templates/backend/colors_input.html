@@ -47,13 +47,28 @@
                                 <input type="hidden" name="id" th:value="${colors.id}" th:if="${colors != null}">
                                 <input type="hidden" th:name="_method" th:value="put" th:if="${colors != null}">
                                 <input type="hidden" th:name="business.id" th:value="${id}" th:if="${colors == null}">
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                     <p id="welcome_font_demo">欢迎页字体颜色</p>
+                                    </div>
+                                </div>
                                 <div class="form-group"><label class="col-sm-2 control-label">欢迎页字体颜色</label>
                                     <div class="col-sm-10"><input name="welcomePageFontColor" type="input" class="form-control colors"
                                                                   th:value="${colors !=null}?${colors.welcomePageFontColor}"></div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                      <p id="details_font_demo">详情页字体颜色</p>
+                                    </div>
+                                </div>
                                 <div class="form-group"><label class="col-sm-2 control-label">详情页字体颜色</label>
                                     <div class="col-sm-10"><input name="detailsPageFontColor" type="input" class="form-control colors"
                                                                   th:value="${colors !=null}?${colors.detailsPageFontColor}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <p id="welcome_bg_demo">详情页背景颜色</p>
+                                    </div>
                                 </div>
                                 <div class="form-group"><label class="col-sm-2 control-label">详情页背景颜色</label>
                                     <div class="col-sm-10"><input  name="detailsPageBackGroundColor" type="input" class="form-control colors"
