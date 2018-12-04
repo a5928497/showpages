@@ -3,6 +3,13 @@ $(function () {
     $welcomeFont = $("#welcome_font_demo");
     $detailsFont = $("#details_font_demo");
     $detailsBg = $("#welcome_bg_demo");
+    //返回按钮事件
+    $backBTN = $(".backBTN");
+    $backBTN.click(function () {
+        var uri = $backBTN.attr("back_uri");
+        window.location.replace(uri);
+        return false;
+    })
     demoColor();
     $colors.colorpicker();
 

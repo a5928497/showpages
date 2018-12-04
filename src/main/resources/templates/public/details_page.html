@@ -10,7 +10,7 @@
 
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" th:style="'background-color:' + ${colors.detailsPageBackGroundColor}">
     <div id="main_wrapper">
         <div class="img_wrapper">
             <img th:src="@{/themeImg/} + ${business.username} + @{/details_pg/logo.jpg}">
@@ -53,6 +53,7 @@
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
+    <input type="hidden" id="detailsPageFontColor" th:value="${colors.detailsPageFontColor}">
     <input type="hidden" class="fields" th:each="field2Custom:${field2Customs}"
            th:attr="field_type= ${field2Custom.type},title=${field2Custom.title},order=${field2Custom.order},condition=${field2Custom.condition}">
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
