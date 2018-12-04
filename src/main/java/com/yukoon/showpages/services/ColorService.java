@@ -19,4 +19,8 @@ public class ColorService {
     public Colors findByBusinessId(Integer id) {
         return colorsRepo.findByBusinessId(id);
     }
+
+    public Colors findById(Integer id) {
+        return colorsRepo.findOne(id);
+    }
 }
