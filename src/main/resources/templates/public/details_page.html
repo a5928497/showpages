@@ -16,7 +16,7 @@
             <img th:src="@{/themeImg/} + ${business.username} + @{/details_pg/logo.jpg}">
         </div>
         <div class="conteng_wrapper">
-            <form action="/result" method="post" modelAttribute="results">
+            <form action="/result" method="post" modelAttribute="results" th:style="'color:'+${colors.detailsPageFontColor}">
                 <input type="hidden" th:name="business.id" th:value="${business.id}">
                 <!--<div class="shortText">-->
                     <!--<label>23423432</label>-->
@@ -53,7 +53,6 @@
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
-    <input type="hidden" id="detailsPageFontColor" th:value="${colors.detailsPageFontColor}">
     <input type="hidden" class="fields" th:each="field2Custom:${field2Customs}"
            th:attr="field_type= ${field2Custom.type},title=${field2Custom.title},order=${field2Custom.order},condition=${field2Custom.condition}">
     <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
