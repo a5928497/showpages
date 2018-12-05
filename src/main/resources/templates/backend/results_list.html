@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
-            <a th:href="@{/exportExcel/} + ${id}"><button class="btn btn-primary btn-warning">导出excel</button></a>
+            <a th:href="@{/exportresults/} + ${id}"><button class="btn btn-primary btn-warning">导出excel</button></a>
             <a th:href="@{/bus_dashboard/} + ${id}"><button class="btn btn-primary btn-info">返回控制台</button></a>
             <shiro:hasRole name="admin">
                 <a th:href="@{/admin_dashboard}"><button class="btn btn-primary btn-primary">管理员控制台</button></a>
