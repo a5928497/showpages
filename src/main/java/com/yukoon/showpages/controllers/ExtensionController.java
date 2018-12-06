@@ -4,6 +4,7 @@ import com.yukoon.showpages.config.PathConfig;
 import com.yukoon.showpages.entities.Extension;
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.services.ExtensionService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,8 @@ public class ExtensionController extends BasicController{
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
 
         }else if (null != me && null != extension.getBusiness().getId()) {
-
+//            String filePath = pathConfig.getWelcomePageImgPath() + StringUtils.substringBeforeLast(themeImg,"/")+"/";
+            String fileName = pic.getOriginalFilename();
         }
         return null;
     }
