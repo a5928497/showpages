@@ -11,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Data
 @Accessors(chain = true)
+@Entity
 public class Extension {
 
     @GeneratedValue(strategy = GenerationType.AUTO)

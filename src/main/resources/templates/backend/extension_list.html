@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard</title>
-
+    <title>Extension</title>
     <link th:href="@{/webjars/bootstrap/3.1.1/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/webjars/font-awesome/4.7.0/css/font-awesome.min.css}" rel="stylesheet">
     <link th:href="@{/webjars/footable/2.0.3/css/footable.core.min.css}" rel="stylesheet">
@@ -32,7 +31,8 @@
             </div>
         </div>
         <div class="wrapper wrapper-content animated fadeInRight">
-            <a th:href="@{/updatepsw}"><button class="btn btn-primary btn-warning">修改密码</button></a>
+            <a th:href="@{/addextension/} + ${id}"><button class="btn btn-primary btn-warning">添加链接</button></a>
+            <a th:href="@{/bus_dashboard/} + ${id}"><button class="btn btn-primary btn-info">返回控制台</button></a>
             <shiro:hasRole name="admin">
                 <a th:href="@{/admin_dashboard}"><button class="btn btn-primary btn-primary">管理员控制台</button></a>
             </shiro:hasRole>
@@ -41,31 +41,26 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>控制台</h5>
+                            <h5>扩展链接</h5>
                         </div>
                         <div class="ibox-content">
 
                             <table class="footable table table-stripped toggle-arrow-tiny">
+                                <thead>
+                                <tr>
+                                    <th data-hide="all">ID</th>
+                                    <th data-hide="all">名称</th>
+                                    <th data-hide="all">链接</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
                                 <tbody>
-                                <tr>
-                                    <p th:text="商户名：+ ${user.title}"></p>
-                                </tr>
-                                <tr>
-                                    <p th:text="新增回复数：+ ${newNum}"></p>
-                                </tr>
-                                <tr>
-                                    <p th:text="合计回复数：+ ${totalNum}"></p>
-                                </tr>
-                                <tr>
+                                <tr th:each="extension:${extensions}">
+                                    <td th:text="${extension.id}">ID</td>
+                                    <td th:text="${extension.title}">key1</td>
+                                    <td th:text="${extension.extend_LINK}">value1</td>
                                     <td>
-                                        <a th:href="@{/fields/}+${user.id}"><button class="btn btn-primary btn-success">字段设置</button></a>
-                                        <a th:href="@{/allresults/}+${user.id}"><button class="btn btn-primary btn-warning">查看所有回复</button></a>
-                                        <a th:href="@{/newresults/}+${user.id}"><button class="btn btn-primary btn-info">查看新增回复</button></a>
-                                        <a th:href="@{/welcomeInfo/}+${user.id}"><button class="btn btn-primary btn-white">介绍设置</button></a>
-                                        <a th:href="@{/themeupload/}+${user.id}"><button class="btn btn-primary btn-danger">界面设置</button></a>
-                                        <a th:href="@{/qrcodes/}+${user.id}"><button class="btn btn-primary btn-primary">链接及二维码</button></a>
-                                        <a th:href="@{/colors/}+${user.id}"><button class="btn btn-primary btn-success">颜色设置</button></a>
-                                        <a th:href="@{/extensions/}+${user.id}"><button class="btn btn-primary btn-warning">扩展链接设置</button></a>
+                                        <a th:href="@{/delfield/}"><button class="btn btn-sm btn-danger delBTN">删除字段</button></a>
                                     </td>
                                 </tr>
                                 </tbody>
