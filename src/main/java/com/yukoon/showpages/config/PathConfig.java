@@ -27,6 +27,11 @@ public class PathConfig extends WebMvcConfigurerAdapter {
 	@Value("${welcomePageImgPath}")
 	private String welcomePageImgPath;
 
+	@Getter
+	@Setter
+	@Value("${extensionImgPath}")
+	private String extensionImgPath;
+
 	@Resource(name="thymeleafViewResolver")
 	private ThymeleafViewResolver thymeleafViewResolver;
 
@@ -35,6 +40,7 @@ public class PathConfig extends WebMvcConfigurerAdapter {
 		if (thymeleafViewResolver != null) {
 			Map<String,Object> map = new HashMap<>();
 			map.put("welcomePageImgPath",welcomePageImgPath);
+			map.put("extensionImgPath",extensionImgPath);
 			thymeleafViewResolver.setStaticVariables(map);
 		}
 		super.configureViewResolvers(registry);
@@ -44,6 +50,7 @@ public class PathConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	    registry.addResourceHandler("/themeImg/**").addResourceLocations("file:"+welcomePageImgPath);
+		registry.addResourceHandler("/extensionImg/**").addResourceLocations("file:"+extensionImgPath);
         super.addResourceHandlers(registry);
     }
 

@@ -49,8 +49,7 @@
                     <img src="#" alt="没有找到该图片，请尝试重新上传" id="theme_img">
                     </div>
                     <p id="size_tips"></p>
-                    <input type="hidden" id="prevImg" th:value="${prevImg}" th:if="${prevImg != null}">
-                    <form action="/themeimgupload" enctype="multipart/form-data" method="post" modelAttribute="extension">
+                    <form action="/extension" enctype="multipart/form-data" method="post" modelAttribute="extension">
                         <input type="hidden" name="business.id" th:value="${extension!=null}?${extension.business.id}:${id}">
                         <button type="button" id="bgc_switch">关闭背景颜色</button>
                         <div class="fileinput fileinput-new input-group" data-provides="fileinput">

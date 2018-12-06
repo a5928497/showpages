@@ -4,6 +4,7 @@ import com.yukoon.showpages.config.PathConfig;
 import com.yukoon.showpages.entities.Extension;
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.services.ExtensionService;
+import com.yukoon.showpages.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sun.reflect.misc.FieldUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,6 +28,9 @@ public class ExtensionController extends BasicController{
     private ExtensionService extensionService;
     @Autowired
     private PathConfig pathConfig;
+
+    private final static Integer HEIGHT = 0;
+    private final static Integer WIDTH = 0;
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/extensions/{id}")
@@ -64,14 +70,38 @@ public class ExtensionController extends BasicController{
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/extension")
     public String addExtension(@RequestParam("pic")MultipartFile pic, HttpServletRequest request,
-                               Extension extension, Map<String,Object> map) {
+                               Extension extension, Map<String,Object> map,RedirectAttributes attributes) {
         User me = whoAmI();
+        String filePath;
+        String fileName = pic.getOriginalFilename();
+        String uploadMsg;
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
-
-        }else if (null != me && null != extension.getBusiness().getId()) {
-//            String filePath = pathConfig.getWelcomePageImgPath() + StringUtils.substringBeforeLast(themeImg,"/")+"/";
-            String fileName = pic.getOriginalFilename();
+            extension = extensionService.saveExtension(extension);
+            if (!"".equals(fileName)) {
+                filePath = pathConfig.getExtensionImgPath() + me.getUsername() +"/";
+                uploadMsg = "图片上传成功!";
+                if (!FileUtil.isImg(fileName)){
+                    uploadMsg = "该文件不是图片格式,请重新上传!";
+                    attributes.addFlashAttribute("uploadMsg",uploadMsg);
+                    return "redirect:/addextension/" + me.getId();
+                }
+                //重命名文件
+                fileName = "extension" + extension.getId() + "." + StringUtils.substringAfterLast(fileName,".");
+                try {
+                    //上传图片
+                    FileUtil.uploadFile(pic.getBytes(),filePath,fileName);
+                    //调整图片大小
+//                    filePath = filePath + fileName;
+//                    FileUtil.resizeImg(filePath,WIDTH,HEIGHT);
+                }catch (Exception e) {
+                    uploadMsg = "图片上传出现错误,请重新上传!";
+                    attributes.addFlashAttribute("uploadMsg",uploadMsg);
+                    return "redirect:/themeupload/" + me.getId();
+                }
+            }
+            return "redirect:/extensions/" + me.getId();
+        }else{
+            return "redirect:/extensions/" + me.getId();
         }
-        return null;
     }
 }
