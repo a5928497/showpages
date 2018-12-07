@@ -32,6 +32,7 @@ public class ExtensionController extends BasicController{
     private final static Integer HEIGHT = 0;
     private final static Integer WIDTH = 0;
 
+    //后台查询所有扩展链接
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/extensions/{id}")
     public String findAllExtensionsByBusinessId(@PathVariable("id")Integer id , Map<String,Object> map) {
@@ -50,6 +51,7 @@ public class ExtensionController extends BasicController{
         return "redirect:/logout";
     }
 
+    //后台前往添加扩展连接
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/addextension/{id}")
     public String toAddExtension(@PathVariable("id")Integer id , Map<String,Object> map,String uploadMsg) {
@@ -66,6 +68,10 @@ public class ExtensionController extends BasicController{
         }
         return "redirect:/logout";
     }
+
+    //后台前往编辑扩展链接
+//    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+//    @GetMapping("/editextension/{id}")
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/extension")

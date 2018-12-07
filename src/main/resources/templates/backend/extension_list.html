@@ -60,7 +60,8 @@
                                     <td th:text="${extension.title}">key1</td>
                                     <td th:text="${extension.extend_LINK}">value1</td>
                                     <td>
-                                        <a th:href="@{/delfield/}"><button class="btn btn-sm btn-danger delBTN">删除字段</button></a>
+                                        <a th:href="@{/editextension/} + ${extension.id}"><button class="btn btn-sm btn-warning">编辑链接</button></a>
+                                        <a th:href="@{/delfield/}"><button class="btn btn-sm btn-danger delBTN">删除链接</button></a>
                                     </td>
                                 </tr>
                                 </tbody>
