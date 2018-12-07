@@ -46,7 +46,7 @@
                 </div>
                 <div class="ibox-content">
                     <div id="img_container" style="background: red">
-                    <img alt="没有找到该图片，请尝试重新上传" id="extension_img" th:src="${extension!=null}?@{/extensionImg/}+${img_src}:@{#}">
+                    <img alt="没有找到该图片，请尝试重新上传" id="extension_img" th:src="${extension!=null}?@{/extensionImg/}+${img_src}+@{?}+${#strings.randomAlphanumeric(2)}:@{#}">
                     </div>
                     <p id="size_tips"></p>
                     <form action="/extension" enctype="multipart/form-data" method="post" modelAttribute="extension">

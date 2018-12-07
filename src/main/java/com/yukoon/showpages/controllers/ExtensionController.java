@@ -93,6 +93,44 @@ public class ExtensionController extends BasicController{
     }
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @PutMapping("/extension")
+    public String editExtension(@RequestParam("pic")MultipartFile pic, HttpServletRequest request,
+                                Extension extension, Map<String,Object> map,RedirectAttributes attributes) {
+        User me = whoAmI();
+        String filePath;
+        String fileName = pic.getOriginalFilename();
+        String uploadMsg;
+        if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
+            extension = extensionService.saveExtension(extension);
+            if (!"".equals(fileName)) {
+                filePath = pathConfig.getExtensionImgPath() + me.getUsername() +"/";
+                uploadMsg = "图片上传成功!";
+                if (!FileUtil.isImg(fileName)){
+                    uploadMsg = "该文件不是图片格式,请重新上传!";
+                    attributes.addFlashAttribute("uploadMsg",uploadMsg);
+                    return "redirect:/editextension/" + extension.getId();
+                }
+                //重命名文件
+                fileName = extension.getImgName();
+                try {
+                    //上传图片
+                    FileUtil.uploadFile(pic.getBytes(),filePath,fileName);
+                    //调整图片大小
+//                    filePath = filePath + fileName;
+//                    FileUtil.resizeImg(filePath,WIDTH,HEIGHT);
+                }catch (Exception e) {
+                    uploadMsg = "图片上传出现错误,请重新上传!";
+                    attributes.addFlashAttribute("uploadMsg",uploadMsg);
+                    return "redirect:/editextension/" + extension.getId();
+                }
+            }
+            return "redirect:/editextension/" + extension.getId();
+        }else{
+            return "redirect:/extensions/" + me.getId();
+        }
+    }
+
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/extension")
     public String addExtension(@RequestParam("pic")MultipartFile pic, HttpServletRequest request,
                                Extension extension, Map<String,Object> map,RedirectAttributes attributes) {
@@ -124,10 +162,10 @@ public class ExtensionController extends BasicController{
                 }catch (Exception e) {
                     uploadMsg = "图片上传出现错误,请重新上传!";
                     attributes.addFlashAttribute("uploadMsg",uploadMsg);
-                    return "redirect:/themeupload/" + me.getId();
+                    return "redirect:/addextension/" + me.getId();
                 }
             }
-            return "redirect:/extensions/" + me.getId();
+            return "redirect:/editextension/" + extension.getId();
         }else{
             return "redirect:/extensions/" + me.getId();
         }
