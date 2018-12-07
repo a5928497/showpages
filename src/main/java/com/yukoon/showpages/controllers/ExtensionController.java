@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,26 @@ public class ExtensionController extends BasicController{
             return "/backend/extension_list";
         }
         return "redirect:/logout";
+    }
+
+    //后台删除扩展链接
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @GetMapping("/delextension/{id}")
+    public String delExtension(@PathVariable("id")Integer id) {
+        User me = whoAmI();
+        Extension extension = extensionService.findById(id);
+        if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
+            //删除图片
+            if (!"".equals(extension.getImgName()) && null != extension.getImgName()) {
+                String filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/" + extension.getImgName();
+                FileUtil.delete(filePath);
+            }
+            //删除记录
+            extensionService.delExtension(id);
+            return "redirect:/extensions/" + extension.getBusiness().getId();
+        }else{
+            return "redirect:/extensions/" + me.getId();
+        }
     }
 
     //后台前往添加扩展连接

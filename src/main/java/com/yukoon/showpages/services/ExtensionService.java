@@ -25,4 +25,9 @@ public class ExtensionService {
     public Extension saveExtension(Extension extension) {
         return extensionRepo.saveAndFlush(extension);
     }
+
+    @Transactional
+    public void delExtension(Integer id) {
+        extensionRepo.delete(id);
+    }
 }
