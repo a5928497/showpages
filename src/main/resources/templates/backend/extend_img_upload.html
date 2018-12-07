@@ -46,10 +46,12 @@
                 </div>
                 <div class="ibox-content">
                     <div id="img_container" style="background: red">
-                    <img src="#" alt="没有找到该图片，请尝试重新上传" id="theme_img">
+                    <img alt="没有找到该图片，请尝试重新上传" id="extension_img" th:src="${extension!=null}?@{/extensionImg/}+${img_src}:@{#}">
                     </div>
                     <p id="size_tips"></p>
                     <form action="/extension" enctype="multipart/form-data" method="post" modelAttribute="extension">
+                        <input type="hidden" name="id" th:value="${extension.id}" th:if="${extension != null}">
+                        <input type="hidden" th:name="_method" th:value="put" th:if="${extension != null}">
                         <input type="hidden" name="business.id" th:value="${extension!=null}?${extension.business.id}:${id}">
                         <button type="button" id="bgc_switch">关闭背景颜色</button>
                         <div class="fileinput fileinput-new input-group" data-provides="fileinput">
@@ -91,7 +93,7 @@
     <script type="text/javascript" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/jasny-bootstrap/3.1.2/dist/js/jasny-bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/backend/theme_img_upload.js}"></script>
+    <script type="text/javascript" th:src="@{/js/backend/extend_img_upload.js}"></script>
 </body>
 
 </html>

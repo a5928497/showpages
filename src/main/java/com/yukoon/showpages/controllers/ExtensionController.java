@@ -10,13 +10,9 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.reflect.misc.FieldUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,6 +27,15 @@ public class ExtensionController extends BasicController{
 
     private final static Integer HEIGHT = 0;
     private final static Integer WIDTH = 0;
+
+    @ModelAttribute
+    public void getExtension(@RequestParam(value = "id",required = false)Integer id, Map<String,Object> map) {
+        //若为修改
+        if (id !=null) {
+            Extension extension = extensionService.findById(id);
+            map.put("extension",extension);
+        }
+    }
 
     //后台查询所有扩展链接
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
@@ -70,8 +75,22 @@ public class ExtensionController extends BasicController{
     }
 
     //后台前往编辑扩展链接
-//    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
-//    @GetMapping("/editextension/{id}")
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @GetMapping("/editextension/{id}")
+    public String toEditExtension(@PathVariable("id")Integer id,Map<String,Object> map) {
+        Extension extension = extensionService.findById(id);
+        User me = whoAmI();
+        if ( !("".equals(extension.getImgName())) || !(null == extension.getImgName())) {
+            map.put("img_src","/" + me.getUsername() + "/" + extension.getImgName());
+        }
+        if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
+            map.put("extension",extension);
+            return "/backend/extend_img_upload";
+        }else if (null != me) {
+            return "redirect:/extensions/" + me.getId();
+        }
+        return "redirect:/logout";
+    }
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/extension")
@@ -93,6 +112,9 @@ public class ExtensionController extends BasicController{
                 }
                 //重命名文件
                 fileName = "extension" + extension.getId() + "." + StringUtils.substringAfterLast(fileName,".");
+                //记录图片名
+                extension.setImgName(fileName);
+                extension = extensionService.saveExtension(extension);
                 try {
                     //上传图片
                     FileUtil.uploadFile(pic.getBytes(),filePath,fileName);

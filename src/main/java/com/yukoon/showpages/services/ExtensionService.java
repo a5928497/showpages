@@ -17,6 +17,10 @@ public class ExtensionService {
         return extensionRepo.findAllByBusinessId(id);
     }
 
+    public Extension findById(Integer id) {
+        return extensionRepo.findOne(id);
+    }
+
     @Transactional
     public Extension saveExtension(Extension extension) {
         return extensionRepo.saveAndFlush(extension);

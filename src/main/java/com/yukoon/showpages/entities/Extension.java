@@ -24,6 +24,9 @@ public class Extension {
     @Column(name = "EXTEND_LINK")
     private String extend_LINK;
 
+    @Column(name = "IMG_NAME")
+    private String imgName;
+
     @ManyToOne
     @JoinColumn(name = "BUSINESS_ID")
     private User business;
