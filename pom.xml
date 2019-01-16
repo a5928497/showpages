@@ -4,7 +4,7 @@
 
 	<groupId>com.yukoon</groupId>
 	<artifactId>showpages</artifactId>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.7</version>
 	<packaging>jar</packaging>
 
 	<name>showpages</name>
@@ -357,7 +357,7 @@
 		<url>https://github.com/a5928497/showpages.git</url>
 		<connection>scm:git:https://github.com/a5928497/showpages.git</connection>
 		<developerConnection>scm:git:https://github.com/a5928497/showpages.git</developerConnection>
-		<tag>0.0.3</tag>
+		<tag>0.0.7</tag>
 	</scm>
 	<distributionManagement>
 		<repository>
