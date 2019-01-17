@@ -212,6 +212,7 @@
 				</includes>
 				<excludes>
 					<exclude>application.yml</exclude>
+					<exclude>pathconfig.yml</exclude>
 				</excludes>
 			</resource>
 			<resource>
