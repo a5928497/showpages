@@ -131,7 +131,7 @@ public class UserController extends BasicController {
     @GetMapping("/qrcodes/{id}")
     public String toQRCodes(@PathVariable("id")Integer id, Map<String,Object> map) {
         User me = whoAmI();
-        if (null != me) {
+        if (null != me && !"admin".equals(me.getRole().getRoleName())) {
             map.put("details_url","/details/"+me.getUsername());
             map.put("introduce_url","/introduce/"+me.getUsername());
             map.put("id",me.getId());
