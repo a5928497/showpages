@@ -35,12 +35,12 @@ public class ColorsController extends BasicController{
             Colors colors = colorService.findByBusinessId(id);
             map.put("colors",colors);
             map.put("id",id);
-            return "/backend/colors_input";
+            return "backend/colors_input";
         }else if (null != me){
             Colors colors = colorService.findByBusinessId(me.getId());
             map.put("colors",colors);
             map.put("id",me.getId());
-            return "/backend/colors_input";
+            return "backend/colors_input";
         }
         return "redirect:/logout";
     }

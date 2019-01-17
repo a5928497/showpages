@@ -39,7 +39,7 @@ public class WelcomeInfoController extends BasicController {
                 map.put("welcomeInfo",welcomeInfo);
             }
             map.put("id",id);
-            return "/backend/welcomeInfo_input";
+            return "backend/welcomeInfo_input";
         }
         //非法访问则返回用户所在控制台界面
         return "redirect:/bus_dashboard/" + me.getId();

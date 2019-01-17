@@ -47,12 +47,12 @@ public class ExtensionController extends BasicController{
             List<Extension> extensions = extensionService.findAllbyBuesinessId(id);
             map.put("extensions",extensions);
             map.put("id",id);
-            return "/backend/extension_list";
+            return "backend/extension_list";
         }else if (null != me){
             List<Extension> extensions = extensionService.findAllbyBuesinessId(me.getId());
             map.put("extensions",extensions);
             map.put("id",me.getId());
-            return "/backend/extension_list";
+            return "backend/extension_list";
         }
         return "redirect:/logout";
     }
@@ -87,10 +87,10 @@ public class ExtensionController extends BasicController{
         }
         if (null != me && (me.getId() == id || "admin".equals(me.getRole().getRoleName()))) {
             map.put("id",id);
-            return "/backend/extend_img_upload";
+            return "backend/extend_img_upload";
         }else if (null != me) {
             map.put("id",me.getId());
-            return "/backend/extend_img_upload";
+            return "backend/extend_img_upload";
         }
         return "redirect:/logout";
     }
@@ -106,7 +106,7 @@ public class ExtensionController extends BasicController{
         }
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             map.put("extension",extension);
-            return "/backend/extend_img_upload";
+            return "backend/extend_img_upload";
         }else if (null != me) {
             return "redirect:/extensions/" + me.getId();
         }

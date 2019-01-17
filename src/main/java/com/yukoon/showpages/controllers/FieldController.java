@@ -47,7 +47,7 @@ public class FieldController extends BasicController{
         }
         map.put("id",id);
         map.put("fields",fields);
-        return "/backend/fields_list";
+        return "backend/fields_list";
     }
 
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
@@ -56,11 +56,11 @@ public class FieldController extends BasicController{
         User me = whoAmI();
         if (null != me && me.getRole().getRoleName().equals("business")) {
             map.put("user",me);
-            return "/backend/field_input";
+            return "backend/field_input";
         }else if ("admin".equals(me.getRole().getRoleName())) {
             User user = userService.findById(id);
             map.put("user",user);
-            return "/backend/field_input";
+            return "backend/field_input";
         }
         return "redirect:/logout";
     }
@@ -84,7 +84,7 @@ public class FieldController extends BasicController{
         CustomField customField = customFieldService.findById(field_id);
         if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             map.put("customField",customField);
-            return "/backend/field_input";
+            return "backend/field_input";
         }
         return "redirect:/logout";
     }

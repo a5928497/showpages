@@ -58,7 +58,7 @@ public class UserController extends BasicController {
     public String toEditUser(@PathVariable("id")Integer id, Map<String,Object> map){
         User user = userService.findById(id);
         map.put("user",user);
-        return "/backend/business_input";
+        return "backend/business_input";
     }
 
     //后台编辑商户
@@ -101,7 +101,7 @@ public class UserController extends BasicController {
 			    map.put("back_url","/bus_dashboard/"+user.getId());
             }
 			map.put("id",user.getId());
-			return "/backend/update_password_input";
+			return "backend/update_password_input";
 		}else {
 			return "redirect:/logout";
 		}
@@ -135,13 +135,13 @@ public class UserController extends BasicController {
             map.put("details_url","/details/"+me.getUsername());
             map.put("introduce_url","/introduce/"+me.getUsername());
             map.put("id",me.getId());
-            return "/backend/QR_code";
+            return "backend/QR_code";
         }else if ("admin".equals(me.getRole().getRoleName())) {
             User business = userService.findById(id);
             map.put("details_url","/details/"+business.getUsername());
             map.put("introduce_url","/introduce/"+business.getUsername());
             map.put("id",id);
-            return "/backend/QR_code";
+            return "backend/QR_code";
         }
         return "redirect:/logout";
     }

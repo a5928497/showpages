@@ -37,7 +37,7 @@ public class PublicController {
 		map.put("colors",colors);
 		map.put("business",business);
 		map.put("paragraphs",welcomeInfo.getParagraph().split(","));
-		return "/public/welcome_page";
+		return "public/welcome_page";
 	}
 
 	//前台访问具体客户详情页
@@ -49,6 +49,6 @@ public class PublicController {
 		map.put("colors",colors);
 		map.put("field2Customs",field2Customs);
 		map.put("business",business);
-		return "/public/details_page";
+		return "public/details_page";
 	}
 }

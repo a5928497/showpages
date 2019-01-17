@@ -37,7 +37,7 @@ public class UploadController extends BasicController {
         User me = whoAmI();
         if (null != me && (me.getId() == id || "admin".equals(me.getRole().getRoleName()))) {
             map.put("user",userService.findById(id));
-            return "/backend/theme_img_upload";
+            return "backend/theme_img_upload";
         }
         return "redirect:/bus_dashboard/" + me.getId();
     }

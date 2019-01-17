@@ -39,7 +39,7 @@ public class ResultController extends BasicController {
             map.put("title","所有回复列表");
             map.put("results",results);
             map.put("id",id);
-            return "/backend/results_list";
+            return "backend/results_list";
         }
         return "redirect:/bus_dashboard/" + me.getId();
     }
@@ -54,7 +54,7 @@ public class ResultController extends BasicController {
             map.put("results",results);
             map.put("id",id);
             resultsService.setOld(results);
-            return "/backend/results_list";
+            return "backend/results_list";
         }
         return "redirect:/bus_dashboard/" + me.getId();
     }
