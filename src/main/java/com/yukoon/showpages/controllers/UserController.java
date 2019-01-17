@@ -38,7 +38,7 @@ public class UserController extends BasicController {
     @RequiresRoles("admin")
     @GetMapping("/user")
     public String toAddUser(){
-        return "/backend/business_input";
+        return "backend/business_input";
     }
 
     //后台添加商户
