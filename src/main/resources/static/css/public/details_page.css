@@ -88,3 +88,7 @@ form {
     height: 100px;
     resize: none;
 }
+
+.shortText label , .timeContent label {
+    width: 30%;
+}
