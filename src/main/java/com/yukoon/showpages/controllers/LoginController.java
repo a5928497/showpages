@@ -43,7 +43,7 @@ public class LoginController extends BasicController{
         if (userService.findAllAdmin().size() == 0) {
             initAdmin();
         }
-        return "/backend/backend";
+        return "backend/backend";
     }
 
     //前往后台管理员界面
@@ -52,7 +52,7 @@ public class LoginController extends BasicController{
     public String toAdminDashboard(Map<String,Object> map) {
         List<User> users = userService.findAllBusiness();
         map.put("users",users);
-        return "/backend/admin_dashboard";
+        return "backend/admin_dashboard";
     }
 
     //前往后台商家界面
@@ -67,14 +67,14 @@ public class LoginController extends BasicController{
             map.put("user",user);
             map.put("newNum",newResults.size());
             map.put("totalNum",allResults.size());
-            return "/backend/bus_dashboard";
+            return "backend/bus_dashboard";
         }else if (null != me) {
             List<Results> newResults =resultsService.findNewsByBussinessId(me.getId());
             List<Results> allResults = resultsService.findAllByBusinessId(me.getId());
             map.put("user",me);
             map.put("newNum",newResults.size());
             map.put("totalNum",allResults.size());
-            return "/backend/bus_dashboard";
+            return "backend/bus_dashboard";
         }
         return "redirect:/logout";
     }
