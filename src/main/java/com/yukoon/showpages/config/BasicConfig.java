@@ -10,7 +10,7 @@ public class BasicConfig extends WebMvcConfigurerAdapter{
     //修改index使index可以被thymeleaf渲染
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("redirect:/index");
+        registry.addViewController("/").setViewName("redirect:/backend");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
     }
