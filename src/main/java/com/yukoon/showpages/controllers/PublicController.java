@@ -1,9 +1,6 @@
 package com.yukoon.showpages.controllers;
 
-import com.yukoon.showpages.entities.Colors;
-import com.yukoon.showpages.entities.Field2Custom;
-import com.yukoon.showpages.entities.User;
-import com.yukoon.showpages.entities.WelcomeInfo;
+import com.yukoon.showpages.entities.*;
 import com.yukoon.showpages.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +42,7 @@ public class PublicController {
 		User business = userService.findByUsername(businessName);
 		List<Field2Custom> field2Customs = field2CustomService.getAllField2CutsomByBusinessId(business.getId());
 		Colors colors = colorService.findByBusinessId(business.getId());
+		List<Extension> extensions = extensionService.findAllbyBuesinessId(business.getId());
 		map.put("colors",colors);
 		map.put("field2Customs",field2Customs);
 		map.put("business",business);
