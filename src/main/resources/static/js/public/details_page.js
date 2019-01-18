@@ -22,6 +22,27 @@ $(function () {
         // $("body").css("height",resizeBackground());
     }
 
+    //提交按钮事件监听
+    $submitBtn.click(function () {
+        $.ajax({
+            type: "POST",   //提交的方法
+            url:"/result", //提交的地址
+            data:$("form").serialize(),// 序列化表单值
+            async: false,
+            error: function (request) {
+                alert("连接超时！");
+            },
+            success: function (data) {
+                if (data == true) {
+                    alert("提交成功！");
+                }else {
+                    alert("提交失败，请重试！");
+                }
+            }
+        });
+        return false;
+    });
+
     function resizeBackground() {
         return $(".conteng_wrapper").position().top + $(".conteng_wrapper").height();
     }

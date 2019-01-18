@@ -4,10 +4,7 @@ import com.yukoon.showpages.entities.Colors;
 import com.yukoon.showpages.entities.Field2Custom;
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.entities.WelcomeInfo;
-import com.yukoon.showpages.services.ColorService;
-import com.yukoon.showpages.services.Field2CustomService;
-import com.yukoon.showpages.services.UserService;
-import com.yukoon.showpages.services.WelcomeInfoService;
+import com.yukoon.showpages.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +24,8 @@ public class PublicController {
 	private Field2CustomService field2CustomService;
 	@Autowired
 	private ColorService colorService;
+	@Autowired
+	private ExtensionService extensionService;
 
 	//前台访问具体客户介绍页
 	@GetMapping("/introduce/{businessName}")
