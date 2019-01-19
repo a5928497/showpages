@@ -113,6 +113,7 @@ public class ExtensionController extends BasicController{
         return "redirect:/logout";
     }
 
+    //后台编辑扩展链接
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PutMapping("/extension")
     public String editExtension(@RequestParam("pic")MultipartFile pic, HttpServletRequest request,
@@ -151,6 +152,7 @@ public class ExtensionController extends BasicController{
         }
     }
 
+    //后台添加扩展连接
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/extension")
     public String addExtension(@RequestParam("pic")MultipartFile pic, HttpServletRequest request,
