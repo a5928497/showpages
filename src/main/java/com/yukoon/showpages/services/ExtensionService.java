@@ -25,10 +25,18 @@ public class ExtensionService {
         Collections.sort(extensions, new Comparator<Extension>() {
             @Override
             public int compare(Extension o1, Extension o2) {
+                if (null == o1.getOrder() || null == o2.getOrder()) return -1;
                 return o1.getOrder().compareTo(o2.getOrder());
             }
         });
         return extensions;
+    }
+
+    //获得该用户下所有扩展链接排序最后的数值
+    public Integer getLastOrderByBusinessId(Integer id) {
+        List<Extension> extensions = findAllAndSortByBuesinessId(id);
+        Integer lastOrder = extensions.get(extensions.size()-1).getOrder();
+        return lastOrder+1;
     }
 
     public Extension findById(Integer id) {

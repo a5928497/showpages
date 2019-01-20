@@ -126,6 +126,8 @@ public class ExtensionController extends BasicController{
         String filePath;
         String fileName = pic.getOriginalFilename();
         String uploadMsg;
+        //若无排序，自动排在最后
+        if (null == extension.getOrder()) extension.setOrder(extensionService.getLastOrderByBusinessId(extension.getBusiness().getId()));
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {
@@ -165,6 +167,8 @@ public class ExtensionController extends BasicController{
         String filePath;
         String fileName = pic.getOriginalFilename();
         String uploadMsg;
+        //若无排序，自动排在最后
+        if (null == extension.getOrder()) extension.setOrder(extensionService.getLastOrderByBusinessId(extension.getBusiness().getId()));
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {

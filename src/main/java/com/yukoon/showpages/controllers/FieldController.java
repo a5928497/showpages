@@ -71,6 +71,7 @@ public class FieldController extends BasicController{
     @PostMapping("/field")
     public String addCustomField(CustomField customField) {
         User me = whoAmI();
+        if (null == customField.getOrder()) customField.setOrder(customFieldService.getLastOrderByBusinessId(customField.getBusiness().getId()));
         if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             customField.setStatus(1);
             customField = customFieldService.saveField(customField);
@@ -97,6 +98,7 @@ public class FieldController extends BasicController{
     @PutMapping("/field")
     public String editCustomField(CustomField customField) {
         User me = whoAmI();
+        if (null == customField.getOrder()) customField.setOrder(customFieldService.getLastOrderByBusinessId(customField.getBusiness().getId()));
         if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             customField = customFieldService.saveField(customField);
             return "redirect:/fields/" + customField.getBusiness().getId();

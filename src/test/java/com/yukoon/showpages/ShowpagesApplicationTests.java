@@ -18,7 +18,7 @@ public class ShowpagesApplicationTests {
 	private UserRepo userRepo;
 	@Test
 	public void contextLoads() {
-		System.out.println(userRepo.findPasswordByUsername("admin"));
+		Integer i  = 1;
 	}
 
 }
