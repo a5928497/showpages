@@ -31,10 +31,10 @@ public class Colors {
     @JoinColumn(name = "BUSINESS_ID")
     private User business;
 
-    public Colors(String welcomePageFontColor, String detailsPageFontColor, String detailsPageBackGroundColor, User business) {
-        this.welcomePageFontColor = welcomePageFontColor;
-        this.detailsPageFontColor = detailsPageFontColor;
-        this.detailsPageBackGroundColor = detailsPageBackGroundColor;
+    public Colors(String basic_color, User business) {
+        this.welcomePageFontColor = basic_color;
+        this.detailsPageFontColor = basic_color;
+        this.detailsPageBackGroundColor = basic_color;
         this.business = business;
     }
 }

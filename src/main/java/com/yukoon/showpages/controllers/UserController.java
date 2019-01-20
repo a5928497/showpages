@@ -28,6 +28,7 @@ public class UserController extends BasicController {
 	private ColorService colorService;
 
     private final static String BUSSINESS = "business";
+	private final static String BASIC_COLOR = "#000000";
 
     //获取User对象
     @ModelAttribute
@@ -46,7 +47,7 @@ public class UserController extends BasicController {
         return "backend/business_input";
     }
 
-    //后台添加商户并初始化颜色
+    //后台添加商户并初始化页面颜色
     @RequiresRoles("admin")
     @PostMapping("/user")
     public String addUser(User user) {
@@ -55,8 +56,7 @@ public class UserController extends BasicController {
 				.setPassword(EncodeUtil.encodePassword(user.getPassword(),user.getUsername()));
         user = userService.addUser(user);
         if (null != user.getId()) {
-			Colors colors = new Colors("#000000","#000000","#000000",user);
-			colorService.saveColors(colors);
+			colorService.saveColors(new Colors(BASIC_COLOR,user));
 		}
         return "redirect:/admin_dashboard";
     }
