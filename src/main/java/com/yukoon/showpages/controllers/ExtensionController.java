@@ -44,12 +44,12 @@ public class ExtensionController extends BasicController{
     public String findAllExtensionsByBusinessId(@PathVariable("id")Integer id , Map<String,Object> map) {
         User me = whoAmI();
         if (null != me && (me.getId() == id || "admin".equals(me.getRole().getRoleName()))) {
-            List<Extension> extensions = extensionService.findAllbyBuesinessId(id);
+            List<Extension> extensions = extensionService.findAllByBuesinessId(id);
             map.put("extensions",extensions);
             map.put("id",id);
             return "backend/extension_list";
         }else if (null != me){
-            List<Extension> extensions = extensionService.findAllbyBuesinessId(me.getId());
+            List<Extension> extensions = extensionService.findAllByBuesinessId(me.getId());
             map.put("extensions",extensions);
             map.put("id",me.getId());
             return "backend/extension_list";

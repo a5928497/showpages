@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -13,8 +15,20 @@ public class ExtensionService {
     @Autowired
     private ExtensionRepo extensionRepo;
 
-    public List<Extension> findAllbyBuesinessId(Integer id) {
+    public List<Extension> findAllByBuesinessId(Integer id) {
         return extensionRepo.findAllByBusinessId(id);
+    }
+
+    //根据排序返回扩展链接
+    public List<Extension> findAllAndSortByBuesinessId(Integer id) {
+        List<Extension> extensions = findAllByBuesinessId(id);
+        Collections.sort(extensions, new Comparator<Extension>() {
+            @Override
+            public int compare(Extension o1, Extension o2) {
+                return o1.getOrder().compareTo(o2.getOrder());
+            }
+        });
+        return extensions;
     }
 
     public Extension findById(Integer id) {

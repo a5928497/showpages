@@ -42,7 +42,8 @@ public class PublicController {
 		User business = userService.findByUsername(businessName);
 		List<Field2Custom> field2Customs = field2CustomService.getAllField2CutsomByBusinessId(business.getId());
 		Colors colors = colorService.findByBusinessId(business.getId());
-		List<Extension> extensions = extensionService.findAllbyBuesinessId(business.getId());
+		List<Extension> extensions = extensionService.findAllAndSortByBuesinessId(business.getId());
+		map.put("extensions",extensions);
 		map.put("colors",colors);
 		map.put("field2Customs",field2Customs);
 		map.put("business",business);
