@@ -92,3 +92,8 @@ form {
 .shortText label , .timeContent label {
     width: 30%;
 }
+
+.extensions_wrapper {
+    width: 80%;
+    margin: 0 auto;
+}

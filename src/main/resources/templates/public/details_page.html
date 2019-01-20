@@ -50,6 +50,11 @@
                     <button type="button" id="submitBtn"></button>
                 </div>
             </form>
+            <div class="extensions_wrapper" th:each="extension:${extensions}" th:if="${extensions!=null}">
+                <a class="extension_link" th:href="${extension.extend_LINK}">
+                    <img th:src="@{/extensionImg/} + ${business.username} + @{/}">
+                </a>
+            </div>
         </div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">

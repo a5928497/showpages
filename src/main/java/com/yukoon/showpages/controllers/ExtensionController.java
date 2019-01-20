@@ -102,7 +102,7 @@ public class ExtensionController extends BasicController{
         Extension extension = extensionService.findById(id);
         User me = whoAmI();
         if ( !("".equals(extension.getImgName())) || !(null == extension.getImgName())) {
-            map.put("img_src","/" + me.getUsername() + "/" + extension.getImgName());
+            map.put("img_src","/" + extension.getBusiness().getUsername() + "/" + extension.getImgName());
         }
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             map.put("extension",extension);
@@ -125,7 +125,7 @@ public class ExtensionController extends BasicController{
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {
-                filePath = pathConfig.getExtensionImgPath() + me.getUsername() +"/";
+                filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/";
                 uploadMsg = "图片上传成功!";
                 if (!FileUtil.isImg(fileName)){
                     uploadMsg = "该文件不是图片格式,请重新上传!";
@@ -164,7 +164,7 @@ public class ExtensionController extends BasicController{
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {
-                filePath = pathConfig.getExtensionImgPath() + me.getUsername() +"/";
+                filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/";
                 uploadMsg = "图片上传成功!";
                 if (!FileUtil.isImg(fileName)){
                     uploadMsg = "该文件不是图片格式,请重新上传!";
