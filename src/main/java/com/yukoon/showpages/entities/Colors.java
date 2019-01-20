@@ -30,4 +30,11 @@ public class Colors {
     @OneToOne
     @JoinColumn(name = "BUSINESS_ID")
     private User business;
+
+    public Colors(String welcomePageFontColor, String detailsPageFontColor, String detailsPageBackGroundColor, User business) {
+        this.welcomePageFontColor = welcomePageFontColor;
+        this.detailsPageFontColor = detailsPageFontColor;
+        this.detailsPageBackGroundColor = detailsPageBackGroundColor;
+        this.business = business;
+    }
 }

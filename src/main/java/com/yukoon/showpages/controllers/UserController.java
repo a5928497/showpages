@@ -1,7 +1,9 @@
 package com.yukoon.showpages.controllers;
 
+import com.yukoon.showpages.entities.Colors;
 import com.yukoon.showpages.entities.Role;
 import com.yukoon.showpages.entities.User;
+import com.yukoon.showpages.services.ColorService;
 import com.yukoon.showpages.services.RoleService;
 import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.EncodeUtil;
@@ -22,6 +24,9 @@ public class UserController extends BasicController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+	private ColorService colorService;
+
     private final static String BUSSINESS = "business";
 
     //获取User对象
@@ -41,7 +46,7 @@ public class UserController extends BasicController {
         return "backend/business_input";
     }
 
-    //后台添加商户
+    //后台添加商户并初始化颜色
     @RequiresRoles("admin")
     @PostMapping("/user")
     public String addUser(User user) {
@@ -49,6 +54,10 @@ public class UserController extends BasicController {
         user.setRole(role).setStatus(1)
 				.setPassword(EncodeUtil.encodePassword(user.getPassword(),user.getUsername()));
         user = userService.addUser(user);
+        if (null != user.getId()) {
+			Colors colors = new Colors("#000000","#000000","#000000",user);
+			colorService.saveColors(colors);
+		}
         return "redirect:/admin_dashboard";
     }
 
