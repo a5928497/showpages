@@ -4,6 +4,7 @@ import com.yukoon.showpages.config.PathConfig;
 import com.yukoon.showpages.entities.Extension;
 import com.yukoon.showpages.entities.User;
 import com.yukoon.showpages.services.ExtensionService;
+import com.yukoon.showpages.services.UserService;
 import com.yukoon.showpages.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -23,6 +24,8 @@ import java.util.Map;
 public class ExtensionController extends BasicController{
     @Autowired
     private ExtensionService extensionService;
+    @Autowired
+	private UserService userService;
     @Autowired
     private PathConfig pathConfig;
 
@@ -67,7 +70,8 @@ public class ExtensionController extends BasicController{
             //删除图片
             if (!"".equals(extension.getImgName()) && null != extension.getImgName()) {
                 String filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/" + extension.getImgName();
-                FileUtil.delete(filePath);
+                boolean exist = new File(filePath).exists();
+                if (exist == true)FileUtil.delete(filePath);
             }
             //删除记录
             extensionService.delExtension(id);
@@ -125,7 +129,7 @@ public class ExtensionController extends BasicController{
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {
-                filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/";
+                filePath = pathConfig.getExtensionImgPath() + userService.findById(extension.getBusiness().getId()).getUsername() +"/";
                 uploadMsg = "图片上传成功!";
                 if (!FileUtil.isImg(fileName)){
                     uploadMsg = "该文件不是图片格式,请重新上传!";
@@ -164,12 +168,12 @@ public class ExtensionController extends BasicController{
         if (null != me && (me.getId() == extension.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             extension = extensionService.saveExtension(extension);
             if (!"".equals(fileName)) {
-                filePath = pathConfig.getExtensionImgPath() + extension.getBusiness().getUsername() +"/";
+                filePath = pathConfig.getExtensionImgPath() + userService.findById(extension.getBusiness().getId()).getUsername() +"/";
                 uploadMsg = "图片上传成功!";
                 if (!FileUtil.isImg(fileName)){
                     uploadMsg = "该文件不是图片格式,请重新上传!";
                     attributes.addFlashAttribute("uploadMsg",uploadMsg);
-                    return "redirect:/addextension/" + me.getId();
+                    return "redirect:/addextension/" + extension.getBusiness().getId();
                 }
                 //重命名文件
                 fileName = "extension" + extension.getId() + "." + StringUtils.substringAfterLast(fileName,".");
@@ -188,7 +192,7 @@ public class ExtensionController extends BasicController{
                     return "redirect:/addextension/" + me.getId();
                 }
             }
-            return "redirect:/editextension/" + extension.getId();
+            return "redirect:/extensions/" + extension.getBusiness().getId();
         }else{
             return "redirect:/extensions/" + me.getId();
         }

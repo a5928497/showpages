@@ -85,7 +85,7 @@
                         </div>
                         <div>
                             <button  type="button" th:attr="back_uri = @{/extensions/}+${id}"  class="btn btn-white backBTN" th:if="${extension==null}">返回</button>
-                            <button  type="button" th:attr="back_uri = @{/extensions/}+${extension.id}"  class="btn btn-white backBTN" th:if="${extension!=null}">返回</button>
+                            <button  type="button" th:attr="back_uri = @{/extensions/}+${extension.business.id}"  class="btn btn-white backBTN" th:if="${extension!=null}">返回</button>
                             <button class="btn btn-primary commitBTN" type="submit">上传</button>
                         </div>
                     </form>

@@ -97,3 +97,12 @@ form {
     width: 80%;
     margin: 0 auto;
 }
+
+.extensions_wrapper a {
+    display: inline-block;
+    width: 100%;
+}
+
+.extensions_wrapper a img {
+    width: 100%;
+}

@@ -52,7 +52,7 @@
             </form>
             <div class="extensions_wrapper" th:each="extension:${extensions}" th:if="${extensions!=null}">
                 <a class="extension_link" th:href="${extension.extend_LINK}">
-                    <img th:src="@{/extensionImg/} + ${business.username} + @{/}">
+                    <img th:src="@{/extensionImg/} + ${business.username} + @{/} + ${extension.imgName}">
                 </a>
             </div>
         </div>
