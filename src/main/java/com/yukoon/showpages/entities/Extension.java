@@ -18,6 +18,9 @@ public class Extension {
     @Id
     private Integer id;
 
+    @Column(name = "EXTEND_ORDER")
+    private Integer order;
+
     @Column(name = "TITLE")
     private String title;
 
