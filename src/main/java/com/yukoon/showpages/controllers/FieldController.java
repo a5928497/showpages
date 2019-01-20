@@ -33,7 +33,7 @@ public class FieldController extends BasicController{
         }
     }
 
-
+    //后台查看全部字段
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/fields/{id}")
     public String findAllfieldsByUserId(@PathVariable("id")Integer id,Map<String,Object> map) {
@@ -50,6 +50,7 @@ public class FieldController extends BasicController{
         return "backend/fields_list";
     }
 
+    //后台前往添加字段
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/addfield/{id}")
     public String toAddField(@PathVariable("id")Integer id, Map<String,Object> map) {
@@ -65,6 +66,7 @@ public class FieldController extends BasicController{
         return "redirect:/logout";
     }
 
+    //后台添加字段
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @PostMapping("/field")
     public String addCustomField(CustomField customField) {
@@ -77,6 +79,7 @@ public class FieldController extends BasicController{
         return "redirect:/logout";
     }
 
+    //后台前往编辑字段
     @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
     @GetMapping("/editfield/{field_id}")
     public String toEditField(@PathVariable("field_id")Integer field_id, Map<String,Object> map) {
@@ -85,6 +88,18 @@ public class FieldController extends BasicController{
         if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
             map.put("customField",customField);
             return "backend/field_input";
+        }
+        return "redirect:/logout";
+    }
+
+    //后台编辑字段
+    @RequiresRoles(value = {"admin","business"},logical = Logical.OR)
+    @PutMapping("/field")
+    public String editCustomField(CustomField customField) {
+        User me = whoAmI();
+        if (null != me && (me.getId() == customField.getBusiness().getId() || "admin".equals(me.getRole().getRoleName()))) {
+            customField = customFieldService.saveField(customField);
+            return "redirect:/fields/" + customField.getBusiness().getId();
         }
         return "redirect:/logout";
     }

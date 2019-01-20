@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,6 +23,13 @@ public class Field2CustomService {
         for (CustomField customField : customFields) {
             field2Customs.add(fieldHandler(fieldConvertor(customField)));
         }
+        //根据顺序进行排序
+        Collections.sort(field2Customs, new Comparator<Field2Custom>() {
+            @Override
+            public int compare(Field2Custom o1, Field2Custom o2) {
+                return o1.getOrder().compareTo(o2.getOrder());
+            }
+        });
         return field2Customs;
     }
 
