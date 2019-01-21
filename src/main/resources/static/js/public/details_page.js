@@ -9,9 +9,11 @@ $(function () {
     var localhostPaht=curWwwPath.substring(0,curWwwPath.indexOf(pathName));
     $wrapper = $("#main_wrapper");
     $submitBtn = $("#submitBtn");
+    $footer = $(".footer_wrapper");
     //初始化图片元素
     $wrapper.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/background.jpg");
     $submitBtn.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/submit_btn.jpg");
+    // $footer.css("background-image","url("+ localhostPaht +"/themeImg/" + $("#businessName").val() + "/details_pg/footer.jpg");
 
     //生成各个选项
     $fields = $(".fields");
@@ -20,6 +22,7 @@ $(function () {
             addSwitch($(this).attr("field_type"),$(this));
         });
         // $("body").css("height",resizeBackground());
+        // $footer.css("bottom",0);
     }
 
     //提交按钮事件监听

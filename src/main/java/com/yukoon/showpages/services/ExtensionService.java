@@ -35,6 +35,7 @@ public class ExtensionService {
     //获得该用户下所有扩展链接排序最后的数值
     public Integer getLastOrderByBusinessId(Integer id) {
         List<Extension> extensions = findAllAndSortByBuesinessId(id);
+        if (extensions.size() < 1) return 1;
         Integer lastOrder = extensions.get(extensions.size()-1).getOrder();
         return lastOrder+1;
     }

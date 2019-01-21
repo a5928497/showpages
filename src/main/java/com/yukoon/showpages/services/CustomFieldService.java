@@ -38,6 +38,7 @@ public class CustomFieldService {
 
 	public Integer getLastOrderByBusinessId(Integer id) {
 		List<CustomField> customFields = findAllandSortByBusinessId(id);
+		if (customFields.size() < 1) return 1;
 		return customFields.get(customFields.size()-1).getOrder() + 1;
 	}
 
