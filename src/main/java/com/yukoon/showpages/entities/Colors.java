@@ -27,6 +27,9 @@ public class Colors {
     @Column(name = "DETAILS_PAGE_BG_COLOR")
     private String detailsPageBackGroundColor;
 
+    @Column(name = "INTRODUCE_BORDER_COLOR")
+    private String introduceBorderColor;
+
     @OneToOne
     @JoinColumn(name = "BUSINESS_ID")
     private User business;
@@ -35,6 +38,7 @@ public class Colors {
         this.welcomePageFontColor = basic_color;
         this.detailsPageFontColor = basic_color;
         this.detailsPageBackGroundColor = basic_color;
+        this.introduceBorderColor = basic_color;
         this.business = business;
     }
 }

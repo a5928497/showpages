@@ -13,9 +13,13 @@
 <body class="gray-bg">
     <div id="main_wrapper">
         <div class="content-warpper">
-            <p th:each="paragraph:${paragraphs}" th:text="${paragraph}" th:style="'color:' + ${colors.welcomePageFontColor}"></p>
+            <div class="p_wrapper" th:style="'border:1px ' + ${colors.introduceBorderColor} + ' solid'">
+                <p th:each="paragraph:${paragraphs}" th:text="${paragraph}"
+                   th:style="'color:' + ${colors.welcomePageFontColor}"></p>
+            </div>
             <button type="button" class="joinBTN"></button>
         </div>
+        <div class="footer_wrapper"></div>
     </div>
     <input type="hidden" id="businessName" th:value="${business.username}">
 
